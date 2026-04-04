@@ -1,0 +1,26 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // All files under users/{userId}/ are only accessible by that user
+    match /users/{userId}/{allPaths=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Pet profile images: users/{userId}/pets/{petId}/profile.{ext}
+    // (covered by the wildcard above, but listed explicitly for clarity)
+
+    // Medical report files: users/{userId}/reports/{petId}/{reportId}/{fileName}
+    // (covered by the wildcard above)
+
+    // ── Vendor Storage ───────────────────────────────────────────
+    // Vendors store images under vendors/{vendorId}/…
+    match /vendors/{vendorId}/{allPaths=**} {
+      // Anyone can read (public product/puppy images)
+      allow read: if true;
+      // Only the vendor can write their own files
+      allow write: if request.auth != null && request.auth.uid == vendorId;
+    }
+  }
+}

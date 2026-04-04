@@ -1,0 +1,143 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper functions ──────────────────────────────────────────
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isDocOwner() {
+      return isSignedIn() && request.auth.uid == resource.data.userId;
+    }
+
+    function incomingIsOwner() {
+      return isSignedIn() && request.auth.uid == request.resource.data.userId;
+    }
+
+    // ── Pets (new collection) ─────────────────────────────────────
+    match /pets/{petId} {
+      allow read: if isDocOwner();
+      allow create: if incomingIsOwner();
+      allow update: if isDocOwner() && incomingIsOwner();
+      allow delete: if isDocOwner();
+    }
+
+    // ── Dog Profiles (legacy collection) ─────────────────────────
+    match /dogProfiles/{dogId} {
+      allow read: if isDocOwner();
+      allow create: if incomingIsOwner();
+      allow update: if isDocOwner() && incomingIsOwner();
+      allow delete: if isDocOwner();
+    }
+
+    // ── Medical Reports ───────────────────────────────────────────
+    match /medicalReports/{reportId} {
+      allow read: if isDocOwner();
+      allow create: if incomingIsOwner();
+      allow update: if isDocOwner() && incomingIsOwner();
+      allow delete: if isDocOwner();
+    }
+
+    // ── Reminders ─────────────────────────────────────────────────
+    match /reminders/{reminderId} {
+      allow read: if isDocOwner();
+      allow create: if incomingIsOwner();
+      allow update: if isDocOwner() && incomingIsOwner();
+      allow delete: if isDocOwner();
+    }
+
+    // ── Vaccination Schedules ─────────────────────────────────────
+    match /vaccinationSchedules/{scheduleId} {
+      allow read: if isDocOwner();
+      allow create: if incomingIsOwner();
+      allow update: if isDocOwner() && incomingIsOwner();
+      allow delete: if isDocOwner();
+    }
+
+    // ── Vaccination Doses ─────────────────────────────────────────
+    match /vaccinationDoses/{doseId} {
+      allow read: if isDocOwner();
+      allow create: if incomingIsOwner();
+      allow update: if isDocOwner() && incomingIsOwner();
+      allow delete: if isDocOwner();
+    }
+
+    // ── Favorites ─────────────────────────────────────────────────
+    // Stored as a single document per user: favorites/{userId}
+    match /favorites/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+
+    // ── User Profiles ─────────────────────────────────────────────
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // ── Vendor Module ─────────────────────────────────────────────
+    // ═══════════════════════════════════════════════════════════════
+
+    // Helper: check if the requesting user is this vendor
+    function isVendor(vendorId) {
+      return isSignedIn() && request.auth.uid == vendorId;
+    }
+
+    // Helper: check if the document's vendorId matches the authed user
+    function isDocVendor() {
+      return isSignedIn() && request.auth.uid == resource.data.vendorId;
+    }
+
+    function incomingIsVendor() {
+      return isSignedIn() && request.auth.uid == request.resource.data.vendorId;
+    }
+
+    // ── Vendor Profiles ──────────────────────────────────────────
+    // Document ID = userId. Vendors can read/write their own profile.
+    match /vendors/{vendorId} {
+      allow read: if isVendor(vendorId);
+      allow create: if isVendor(vendorId);
+      allow update: if isVendor(vendorId);
+    }
+
+    // ── Stores ───────────────────────────────────────────────────
+    match /stores/{storeId} {
+      // Anyone can read published store profiles (public marketplace)
+      allow read: if true;
+      allow create: if incomingIsVendor();
+      allow update: if isDocVendor() && incomingIsVendor();
+      allow delete: if isDocVendor();
+    }
+
+    // ── Puppy Listings ───────────────────────────────────────────
+    match /puppyListings/{listingId} {
+      // Public can read published listings
+      allow read: if true;
+      allow create: if incomingIsVendor();
+      allow update: if isDocVendor() && incomingIsVendor();
+      allow delete: if isDocVendor();
+    }
+
+    // ── Vendor Products ──────────────────────────────────────────
+    match /vendorProducts/{productId} {
+      // Public can read published products
+      allow read: if true;
+      allow create: if incomingIsVendor();
+      allow update: if isDocVendor() && incomingIsVendor();
+      allow delete: if isDocVendor();
+    }
+
+    // ── Inquiries ────────────────────────────────────────────────
+    match /inquiries/{inquiryId} {
+      // Vendor can read their own inquiries; any signed-in user can create
+      allow read: if isDocVendor() || (isSignedIn() && request.auth.uid == resource.data.buyerUserId);
+      allow create: if isSignedIn();
+      allow update: if isDocVendor();
+    }
+  }
+}

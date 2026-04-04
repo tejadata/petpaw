@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="50" fill="#f97316"/>
+  <!-- Main paw pad -->
+  <ellipse cx="50" cy="62" rx="18" ry="14" fill="white"/>
+  <!-- Top left toe -->
+  <ellipse cx="30" cy="44" rx="8" ry="10" fill="white"/>
+  <!-- Top right toe -->
+  <ellipse cx="70" cy="44" rx="8" ry="10" fill="white"/>
+  <!-- Middle left toe -->
+  <ellipse cx="40" cy="36" rx="7" ry="9" fill="white"/>
+  <!-- Middle right toe -->
+  <ellipse cx="60" cy="36" rx="7" ry="9" fill="white"/>
+</svg>
