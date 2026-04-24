@@ -15,6 +15,7 @@ import {
   PawPrint,
   LogOut,
   ArrowLeft,
+  Store,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 
@@ -26,6 +27,7 @@ const navItems = [
   { href: "/admin/faqs", icon: HelpCircle, label: "FAQs" },
   { href: "/admin/symptoms", icon: Stethoscope, label: "Symptoms" },
   { href: "/admin/users", icon: Users, label: "Users" },
+  { href: "/admin/vendors", icon: Store, label: "Vendors" },
   { href: "/admin/logs", icon: ClipboardList, label: "Activity Logs" },
 ];
 
@@ -52,7 +54,7 @@ export function AdminSidebar() {
                 "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                 isActive
                   ? "bg-primary/10 text-primary"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground",
               )}
             >
               <item.icon className="h-4 w-4" />

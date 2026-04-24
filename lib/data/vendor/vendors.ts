@@ -4,6 +4,9 @@ import {
   getDoc,
   setDoc,
   updateDoc,
+  getDocs,
+  query,
+  where,
   Timestamp,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -60,4 +63,43 @@ export async function updateVendorProfile(
   await updateDoc(doc(db, "vendors", userId), { ...data, updatedAt: now });
   const updated = await getVendorByUserId(userId);
   return updated ?? ({ ...data, id: userId, userId, updatedAt: now } as Vendor);
+}
+
+// Admin functions for vendor approval
+export async function getPendingVendors(): Promise<Vendor[]> {
+  try {
+    const querySnapshot = await getDocs(
+      query(collection(db, "vendors"), where("approvalStatus", "==", "pending"))
+    );
+    return querySnapshot.docs.map((doc) => docToVendor(doc.id, doc.data() as Record<string, unknown>));
+  } catch (error) {
+    console.error("Error fetching pending vendors:", error);
+    return [];
+  }
+}
+
+export async function getAllVendors(): Promise<Vendor[]> {
+  try {
+    const querySnapshot = await getDocs(collection(db, "vendors"));
+    return querySnapshot.docs.map((doc) => docToVendor(doc.id, doc.data() as Record<string, unknown>));
+  } catch (error) {
+    console.error("Error fetching all vendors:", error);
+    return [];
+  }
+}
+
+export async function approveVendor(vendorId: string): Promise<void> {
+  await updateDoc(doc(db, "vendors", vendorId), {
+    approvalStatus: "approved",
+    rejectionReason: null,
+    updatedAt: new Date(),
+  });
+}
+
+export async function rejectVendor(vendorId: string, reason: string): Promise<void> {
+  await updateDoc(doc(db, "vendors", vendorId), {
+    approvalStatus: "rejected",
+    rejectionReason: reason,
+    updatedAt: new Date(),
+  });
 }

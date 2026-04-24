@@ -33,13 +33,13 @@ export function useVendorAuthGuard() {
       .then((v) => {
         setVendor(v);
 
-        // If no vendor profile yet and not on onboarding page, redirect
-        if (!v && pathname !== "/vendor/onboarding" && !isPublicRoute) {
-          router.replace("/vendor/onboarding");
+        // If vendor profile exists but not approved, redirect to pending page
+        if (v && v.approvalStatus !== "approved" && pathname !== "/vendor/pending" && !isPublicRoute) {
+          router.replace("/vendor/pending");
         }
 
-        // If already has vendor profile and on onboarding, redirect to dashboard
-        if (v && pathname === "/vendor/onboarding") {
+        // If vendor is approved and on pending page, redirect to dashboard
+        if (v && v.approvalStatus === "approved" && pathname === "/vendor/pending") {
           router.replace("/vendor/dashboard");
         }
 

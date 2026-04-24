@@ -1,18 +1,17 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { getAllUsers } from "@/lib/data/users";
+import type { User } from "@/types/user";
 
-const mockUsers = [
-  { id: "user-1", name: "Admin User", email: "admin@pawmatch.com", role: "ADMIN", createdAt: "2024-01-01" },
-  { id: "user-2", name: "Demo User", email: "user@pawmatch.com", role: "USER", createdAt: "2024-01-15" },
-];
+export default async function AdminUsersPage() {
+  const users = await getAllUsers();
 
-export default function AdminUsersPage() {
   return (
     <div>
       <h1 className="text-3xl font-bold">Users</h1>
       <p className="mt-1 text-muted-foreground">
-        Manage user accounts ({mockUsers.length} users).
+        Manage user accounts ({users.length} users).
       </p>
 
       <Card className="mt-8">
@@ -29,16 +28,26 @@ export default function AdminUsersPage() {
                 </tr>
               </thead>
               <tbody>
-                {mockUsers.map((user) => (
+                {users.map((user) => (
                   <tr key={user.id} className="border-b last:border-0">
-                    <td className="px-4 py-3 font-medium">{user.name}</td>
-                    <td className="px-4 py-3 text-muted-foreground">{user.email}</td>
+                    <td className="px-4 py-3 font-medium">
+                      {user.name || user.email}
+                    </td>
+                    <td className="px-4 py-3 text-muted-foreground">
+                      {user.email}
+                    </td>
                     <td className="px-4 py-3">
-                      <Badge variant={user.role === "ADMIN" ? "default" : "secondary"}>
+                      <Badge
+                        variant={
+                          user.role === "ADMIN" ? "default" : "secondary"
+                        }
+                      >
                         {user.role}
                       </Badge>
                     </td>
-                    <td className="px-4 py-3 text-muted-foreground">{user.createdAt}</td>
+                    <td className="px-4 py-3 text-muted-foreground">
+                      {user.createdAt.toLocaleDateString()}
+                    </td>
                     <td className="px-4 py-3 text-right">
                       <Button variant="ghost" size="sm">
                         Edit

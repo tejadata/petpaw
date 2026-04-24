@@ -4,7 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { vendorOnboardingSchema, type VendorOnboardingInput } from "@/lib/validations/vendor";
+import {
+  vendorOnboardingSchema,
+  type VendorOnboardingInput,
+} from "@/lib/validations/vendor";
 import { createVendorProfile } from "@/lib/data/vendor/vendors";
 import { useAuth } from "@/lib/auth-context";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -83,7 +86,8 @@ export default function VendorOnboardingPage() {
       <CardHeader className="text-center">
         <h1 className="text-2xl font-bold">Complete Your Vendor Profile</h1>
         <p className="text-sm text-muted-foreground">
-          Tell us about your business. Your account will be reviewed before you can publish listings.
+          Tell us about your business. Your account will be reviewed by our team
+          before you can publish listings.
         </p>
       </CardHeader>
       <CardContent>
@@ -102,16 +106,28 @@ export default function VendorOnboardingPage() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="businessName">Business / Store Name *</Label>
-                <Input id="businessName" placeholder="Happy Paws Pet Shop" {...register("businessName")} />
+                <Input
+                  id="businessName"
+                  placeholder="Happy Paws Pet Shop"
+                  {...register("businessName")}
+                />
                 {errors.businessName && (
-                  <p className="text-xs text-red-600">{errors.businessName.message}</p>
+                  <p className="text-xs text-red-600">
+                    {errors.businessName.message}
+                  </p>
                 )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="ownerName">Owner Full Name *</Label>
-                <Input id="ownerName" placeholder="John Doe" {...register("ownerName")} />
+                <Input
+                  id="ownerName"
+                  placeholder="John Doe"
+                  {...register("ownerName")}
+                />
                 {errors.ownerName && (
-                  <p className="text-xs text-red-600">{errors.ownerName.message}</p>
+                  <p className="text-xs text-red-600">
+                    {errors.ownerName.message}
+                  </p>
                 )}
               </div>
             </div>
@@ -119,13 +135,27 @@ export default function VendorOnboardingPage() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="email">Email *</Label>
-                <Input id="email" type="email" placeholder="you@example.com" {...register("email")} />
-                {errors.email && <p className="text-xs text-red-600">{errors.email.message}</p>}
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  {...register("email")}
+                />
+                {errors.email && (
+                  <p className="text-xs text-red-600">{errors.email.message}</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="phone">Phone *</Label>
-                <Input id="phone" type="tel" placeholder="+1 555-123-4567" {...register("phone")} />
-                {errors.phone && <p className="text-xs text-red-600">{errors.phone.message}</p>}
+                <Input
+                  id="phone"
+                  type="tel"
+                  placeholder="+1 555-123-4567"
+                  {...register("phone")}
+                />
+                {errors.phone && (
+                  <p className="text-xs text-red-600">{errors.phone.message}</p>
+                )}
               </div>
             </div>
 
@@ -144,7 +174,9 @@ export default function VendorOnboardingPage() {
                 ))}
               </select>
               {errors.storeType && (
-                <p className="text-xs text-red-600">{errors.storeType.message}</p>
+                <p className="text-xs text-red-600">
+                  {errors.storeType.message}
+                </p>
               )}
             </div>
 
@@ -157,7 +189,9 @@ export default function VendorOnboardingPage() {
                 {...register("description")}
               />
               {errors.description && (
-                <p className="text-xs text-red-600">{errors.description.message}</p>
+                <p className="text-xs text-red-600">
+                  {errors.description.message}
+                </p>
               )}
             </div>
           </div>
@@ -169,36 +203,66 @@ export default function VendorOnboardingPage() {
             </h3>
             <div className="space-y-2">
               <Label htmlFor="address">Street Address *</Label>
-              <Input id="address" placeholder="123 Main Street" {...register("address")} />
-              {errors.address && <p className="text-xs text-red-600">{errors.address.message}</p>}
+              <Input
+                id="address"
+                placeholder="123 Main Street"
+                {...register("address")}
+              />
+              {errors.address && (
+                <p className="text-xs text-red-600">{errors.address.message}</p>
+              )}
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="city">City *</Label>
-                <Input id="city" placeholder="San Francisco" {...register("city")} />
-                {errors.city && <p className="text-xs text-red-600">{errors.city.message}</p>}
+                <Input
+                  id="city"
+                  placeholder="San Francisco"
+                  {...register("city")}
+                />
+                {errors.city && (
+                  <p className="text-xs text-red-600">{errors.city.message}</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="state">State *</Label>
-                <Input id="state" placeholder="California" {...register("state")} />
-                {errors.state && <p className="text-xs text-red-600">{errors.state.message}</p>}
+                <Input
+                  id="state"
+                  placeholder="California"
+                  {...register("state")}
+                />
+                {errors.state && (
+                  <p className="text-xs text-red-600">{errors.state.message}</p>
+                )}
               </div>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="postalCode">Postal Code *</Label>
-                <Input id="postalCode" placeholder="94105" {...register("postalCode")} />
+                <Input
+                  id="postalCode"
+                  placeholder="94105"
+                  {...register("postalCode")}
+                />
                 {errors.postalCode && (
-                  <p className="text-xs text-red-600">{errors.postalCode.message}</p>
+                  <p className="text-xs text-red-600">
+                    {errors.postalCode.message}
+                  </p>
                 )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="country">Country *</Label>
-                <Input id="country" placeholder="United States" {...register("country")} />
+                <Input
+                  id="country"
+                  placeholder="United States"
+                  {...register("country")}
+                />
                 {errors.country && (
-                  <p className="text-xs text-red-600">{errors.country.message}</p>
+                  <p className="text-xs text-red-600">
+                    {errors.country.message}
+                  </p>
                 )}
               </div>
             </div>
@@ -212,21 +276,30 @@ export default function VendorOnboardingPage() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="licenseNumber">License Number</Label>
-                <Input id="licenseNumber" placeholder="LIC-12345" {...register("licenseNumber")} />
+                <Input
+                  id="licenseNumber"
+                  placeholder="LIC-12345"
+                  {...register("licenseNumber")}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="taxId">GST / Tax ID</Label>
-                <Input id="taxId" placeholder="GST1234567" {...register("taxId")} />
+                <Input
+                  id="taxId"
+                  placeholder="GST1234567"
+                  {...register("taxId")}
+                />
               </div>
             </div>
           </div>
 
           <Button type="submit" className="w-full" disabled={submitting}>
-            {submitting ? "Submitting..." : "Submit for Review"}
+            {submitting ? "Submitting..." : "Submit Application"}
           </Button>
 
           <p className="text-center text-xs text-muted-foreground">
-            Your application will be reviewed by our team. You&apos;ll be notified once approved.
+            Your application will be reviewed by our team. You&apos;ll be
+            notified once approved.
           </p>
         </form>
       </CardContent>

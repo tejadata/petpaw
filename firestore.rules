@@ -8,6 +8,10 @@ service cloud.firestore {
       return request.auth != null;
     }
 
+    function isAdmin() {
+      return isSignedIn() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "ADMIN";
+    }
+
     function isOwner(userId) {
       return isSignedIn() && request.auth.uid == userId;
     }
@@ -99,18 +103,20 @@ service cloud.firestore {
 
     // ── Vendor Profiles ──────────────────────────────────────────
     // Document ID = userId. Vendors can read/write their own profile.
+    // Admins can read all vendor profiles.
     match /vendors/{vendorId} {
-      allow read: if isVendor(vendorId);
+      allow read: if isVendor(vendorId) || isAdmin();
       allow create: if isVendor(vendorId);
-      allow update: if isVendor(vendorId);
+      allow update: if isVendor(vendorId) || isAdmin();
     }
 
     // ── Stores ───────────────────────────────────────────────────
+    // Anyone can read published store profiles (public marketplace)
+    // Admins can read (and approve) all stores
     match /stores/{storeId} {
-      // Anyone can read published store profiles (public marketplace)
       allow read: if true;
       allow create: if incomingIsVendor();
-      allow update: if isDocVendor() && incomingIsVendor();
+      allow update: if (isDocVendor() && incomingIsVendor()) || isAdmin();
       allow delete: if isDocVendor();
     }
 

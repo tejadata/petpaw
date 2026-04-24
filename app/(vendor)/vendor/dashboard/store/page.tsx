@@ -1,9 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useVendorAuthGuard } from "@/lib/hooks/use-vendor-auth-guard";
-import { getStoreByVendor, createStore, updateStore } from "@/lib/data/vendor/stores";
-import { uploadStoreLogo, uploadStoreBanner } from "@/lib/data/vendor/vendor-storage";
+import {
+  getStoreByVendor,
+  createStore,
+  updateStore,
+} from "@/lib/data/vendor/stores";
+import {
+  uploadStoreLogo,
+  uploadStoreBanner,
+} from "@/lib/data/vendor/vendor-storage";
 import { StoreProfileForm } from "@/components/vendor/store-profile-form";
 import { MultiImageUpload } from "@/components/vendor/multi-image-upload";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -13,6 +21,7 @@ import type { Store } from "@/types/vendor";
 import type { StoreProfileInput } from "@/lib/validations/vendor-store";
 
 export default function StoreProfilePage() {
+  const router = useRouter();
   const { user, vendor } = useVendorAuthGuard();
   const [store, setStore] = useState<Store | null>(null);
   const [loading, setLoading] = useState(true);
@@ -20,13 +29,18 @@ export default function StoreProfilePage() {
   const [error, setError] = useState("");
 
   // Logo/Banner state
-  const [logoImages, setLogoImages] = useState<{ url: string; path: string }[]>([]);
-  const [bannerImages, setBannerImages] = useState<{ url: string; path: string }[]>([]);
+  const [logoImages, setLogoImages] = useState<{ url: string; path: string }[]>(
+    [],
+  );
+  const [bannerImages, setBannerImages] = useState<
+    { url: string; path: string }[]
+  >([]);
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [uploadingBanner, setUploadingBanner] = useState(false);
 
   useEffect(() => {
     if (!user) return;
+
     getStoreByVendor(user.uid).then((s) => {
       setStore(s);
       if (s?.logoUrl) setLogoImages([{ url: s.logoUrl, path: "" }]);
@@ -34,6 +48,12 @@ export default function StoreProfilePage() {
       setLoading(false);
     });
   }, [user]);
+
+  useEffect(() => {
+    if (!loading && user && !vendor) {
+      router.replace("/vendor/onboarding");
+    }
+  }, [loading, user, vendor, router]);
 
   async function handleLogoAdd(files: File[]) {
     if (!user || !files[0]) return;
@@ -68,7 +88,18 @@ export default function StoreProfilePage() {
   }
 
   async function handleSubmit(data: StoreProfileInput) {
-    if (!user || !vendor) return;
+    if (!user) {
+      setError("You must be signed in to save your store profile.");
+      return;
+    }
+
+    if (!vendor) {
+      setError(
+        "Please complete your vendor profile before creating your store.",
+      );
+      return;
+    }
+
     setError("");
     setSaving(true);
     try {
@@ -84,6 +115,7 @@ export default function StoreProfilePage() {
           taxId: data.taxId ?? null,
         });
         setStore(created);
+        router.push("/vendor/dashboard");
       }
     } catch {
       setError("Failed to save store profile.");
@@ -133,9 +165,13 @@ export default function StoreProfilePage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">{store ? "Edit Store Profile" : "Set Up Your Store"}</h1>
+          <h1 className="text-2xl font-bold">
+            {store ? "Edit Store Profile" : "Set Up Your Store"}
+          </h1>
           <p className="text-sm text-muted-foreground">
-            {store ? "Update your store details and settings." : "Create your store to start adding listings."}
+            {store
+              ? "Update your store details and settings."
+              : "Create your store to start adding listings."}
           </p>
         </div>
         {store && <ApprovalStatusBadge status={store.approvalStatus} />}

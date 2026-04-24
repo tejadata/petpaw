@@ -1,15 +1,61 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Dog, FileText, ShoppingBag, Users, HelpCircle, Stethoscope } from "lucide-react";
+import {
+  Dog,
+  FileText,
+  ShoppingBag,
+  Users,
+  HelpCircle,
+  Stethoscope,
+} from "lucide-react";
 import Link from "next/link";
+import { getAllUsers } from "@/lib/data/users";
 
-export default function AdminDashboardPage() {
+export default async function AdminDashboardPage() {
+  const users = await getAllUsers();
+
   const stats = [
-    { icon: Dog, label: "Breeds", value: "15", href: "/admin/breeds", color: "text-blue-600" },
-    { icon: FileText, label: "Articles", value: "10", href: "/admin/articles", color: "text-green-600" },
-    { icon: ShoppingBag, label: "Products", value: "12", href: "/admin/products", color: "text-purple-600" },
-    { icon: HelpCircle, label: "FAQs", value: "10", href: "/admin/faqs", color: "text-amber-600" },
-    { icon: Stethoscope, label: "Symptoms", value: "20", href: "/admin/symptoms", color: "text-red-600" },
-    { icon: Users, label: "Users", value: "2", href: "/admin/users", color: "text-indigo-600" },
+    {
+      icon: Dog,
+      label: "Breeds",
+      value: "15",
+      href: "/admin/breeds",
+      color: "text-blue-600",
+    },
+    {
+      icon: FileText,
+      label: "Articles",
+      value: "10",
+      href: "/admin/articles",
+      color: "text-green-600",
+    },
+    {
+      icon: ShoppingBag,
+      label: "Products",
+      value: "12",
+      href: "/admin/products",
+      color: "text-purple-600",
+    },
+    {
+      icon: HelpCircle,
+      label: "FAQs",
+      value: "10",
+      href: "/admin/faqs",
+      color: "text-amber-600",
+    },
+    {
+      icon: Stethoscope,
+      label: "Symptoms",
+      value: "20",
+      href: "/admin/symptoms",
+      color: "text-red-600",
+    },
+    {
+      icon: Users,
+      label: "Users",
+      value: users.length.toString(),
+      href: "/admin/users",
+      color: "text-indigo-600",
+    },
   ];
 
   return (

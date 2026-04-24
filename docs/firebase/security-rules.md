@@ -28,26 +28,26 @@ function isVendor(vendorId) {
 
 ### User Data Collections
 
-| Collection | Read | Create | Update | Delete |
-|---|---|---|---|---|
-| `users/{userId}` | Owner only | Owner only | Owner only | — |
-| `pets/{petId}` | Owner (by `userId` field) | Signed-in (sets own `userId`) | Owner | Owner |
-| `dogProfiles/{dogId}` | Owner (by `userId` field) | Signed-in | Owner | Owner |
-| `medicalReports/{reportId}` | Owner (by `userId` field) | Signed-in | Owner | Owner |
-| `reminders/{reminderId}` | Owner (by `userId` field) | Signed-in | Owner | Owner |
-| `favorites/{userId}` | Owner only | Owner only | Owner only | — |
+| Collection                  | Read                      | Create                        | Update     | Delete |
+| --------------------------- | ------------------------- | ----------------------------- | ---------- | ------ |
+| `users/{userId}`            | Owner only                | Owner only                    | Owner only | —      |
+| `pets/{petId}`              | Owner (by `userId` field) | Signed-in (sets own `userId`) | Owner      | Owner  |
+| `dogProfiles/{dogId}`       | Owner (by `userId` field) | Signed-in                     | Owner      | Owner  |
+| `medicalReports/{reportId}` | Owner (by `userId` field) | Signed-in                     | Owner      | Owner  |
+| `reminders/{reminderId}`    | Owner (by `userId` field) | Signed-in                     | Owner      | Owner  |
+| `favorites/{userId}`        | Owner only                | Owner only                    | Owner only | —      |
 
 **Key pattern:** All user data documents include a `userId` field. Read/update/delete operations check `resource.data.userId == request.auth.uid`.
 
 ### Vendor Collections
 
-| Collection | Read | Create | Update | Delete |
-|---|---|---|---|---|
-| `vendors/{vendorId}` | Vendor only | Signed-in | Vendor | — |
-| `stores/{storeId}` | **Public** (anyone) | Signed-in | Vendor (by `vendorId`) | Vendor |
-| `puppyListings/{listingId}` | **Public** (anyone) | Signed-in | Vendor (by `vendorId`) | Vendor |
+| Collection                   | Read                | Create    | Update                 | Delete |
+| ---------------------------- | ------------------- | --------- | ---------------------- | ------ |
+| `vendors/{vendorId}`         | Vendor only         | Signed-in | Vendor                 | —      |
+| `stores/{storeId}`           | **Public** (anyone) | Signed-in | Vendor (by `vendorId`) | Vendor |
+| `puppyListings/{listingId}`  | **Public** (anyone) | Signed-in | Vendor (by `vendorId`) | Vendor |
 | `vendorProducts/{productId}` | **Public** (anyone) | Signed-in | Vendor (by `vendorId`) | Vendor |
-| `inquiries/{inquiryId}` | Vendor + buyer | Signed-in | — | — |
+| `inquiries/{inquiryId}`      | Vendor + buyer      | Signed-in | —                      | —      |
 
 **Key pattern:** Marketplace listings (`stores`, `puppyListings`, `vendorProducts`) are publicly readable so unauthenticated visitors can browse. Write operations are restricted to the vendor who owns the listing.
 
@@ -67,12 +67,13 @@ function isVendor(vendorId) {
 /users/{userId}/{allPaths=**}
 ```
 
-| Operation | Rule |
-|---|---|
-| Read | Owner only (`request.auth.uid == userId`) |
-| Write | Owner only (`request.auth.uid == userId`) |
+| Operation | Rule                                      |
+| --------- | ----------------------------------------- |
+| Read      | Owner only (`request.auth.uid == userId`) |
+| Write     | Owner only (`request.auth.uid == userId`) |
 
 **Covered paths:**
+
 - `users/{userId}/pets/{petId}/profile.{ext}` — Pet profile images
 - `users/{userId}/reports/{petId}/{reportId}/{fileName}` — Medical report files
 
@@ -82,12 +83,13 @@ function isVendor(vendorId) {
 /vendors/{vendorId}/{allPaths=**}
 ```
 
-| Operation | Rule |
-|---|---|
-| Read | **Public** (anyone, even unauthenticated) |
-| Write | Vendor only (`request.auth.uid == vendorId`) |
+| Operation | Rule                                         |
+| --------- | -------------------------------------------- |
+| Read      | **Public** (anyone, even unauthenticated)    |
+| Write     | Vendor only (`request.auth.uid == vendorId`) |
 
 **Covered paths:**
+
 - `vendors/{vendorId}/puppies/{listingId}/{fileName}` — Puppy photos
 - `vendors/{vendorId}/products/{productId}/{fileName}` — Product photos
 - `vendors/{vendorId}/store/logo.{ext}` — Store logo
@@ -106,10 +108,11 @@ function isVendor(vendorId) {
 Applied to Firebase Cloud Storage for cross-origin requests.
 
 **Allowed origins:**
+
 - `http://localhost:3000` (local dev)
 - `http://localhost:3001` (alternate local)
-- `https://petpaw-820c2.web.app` (Firebase Hosting)
-- `https://petpaw-820c2.firebaseapp.com` (Firebase default domain)
+- `https://petpaw-e4259.web.app` (Firebase Hosting)
+- `https://petpaw-e4259.firebaseapp.com` (Firebase default domain)
 
 **Allowed methods:** GET, POST, PUT, DELETE, OPTIONS  
 **Max-Age:** 3600 seconds  

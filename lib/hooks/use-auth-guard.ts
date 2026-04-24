@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 
 export function useAuthGuard(adminOnly = false) {
-  const { user, loading } = useAuth();
+  const { user, userProfile, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -14,10 +14,10 @@ export function useAuthGuard(adminOnly = false) {
       router.replace("/login");
       return;
     }
-    if (adminOnly && user.email !== "admin@pawmatch.com") {
+    if (adminOnly && userProfile?.role !== "ADMIN") {
       router.replace("/dashboard");
     }
-  }, [user, loading, adminOnly, router]);
+  }, [user, userProfile, loading, adminOnly, router]);
 
-  return { user, loading };
+  return { user, userProfile, loading };
 }
