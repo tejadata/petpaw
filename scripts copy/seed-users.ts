@@ -22,7 +22,7 @@ const adminAuth = getAuth();
 const db = getFirestore();
 
 const demoUsers = [
-  { email: "admin@pawmatch.com", password: "admin123", displayName: "Admin", role: "ADMIN" as const },
+  { email: "bhanusvist@gmail.com", password: "admin123", displayName: "Admin", role: "ADMIN" as const },
 ];
 
 async function main() {

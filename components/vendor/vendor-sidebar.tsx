@@ -15,11 +15,9 @@ import {
   Menu,
   X,
 } from "lucide-react";
-import { signOut } from "firebase/auth";
-import { auth } from "@/lib/firebase";
-import { useRouter } from "next/navigation";
 import { ApprovalStatusBadge } from "@/components/vendor/approval-status-badge";
 import type { VendorApprovalStatus } from "@/types/vendor";
+import { signOutAndRedirect } from "@/lib/auth-actions";
 
 const navItems = [
   { href: "/vendor/dashboard", icon: LayoutDashboard, label: "Overview" },
@@ -69,12 +67,10 @@ interface VendorSidebarProps {
 
 export function VendorSidebar({ approvalStatus }: VendorSidebarProps) {
   const pathname = usePathname();
-  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   async function handleSignOut() {
-    await signOut(auth);
-    router.push("/vendor/login");
+    await signOutAndRedirect("/vendor/login");
   }
 
   return (

@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import { createUserProfile } from "@/lib/data/users";
+import { ADMIN_EMAILS } from "@/lib/constants";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,9 +40,23 @@ export default function RegisterPage() {
       return;
     }
 
+    const isReservedAdminEmail = ADMIN_EMAILS.some((adminEmail) => adminEmail === email);
+
+    if (isReservedAdminEmail) {
+      setError("This email is reserved. Please use a different account.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const credential = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(credential.user, { displayName: name });
+      await createUserProfile(credential.user.uid, {
+        name,
+        email,
+        image: null,
+        role: "USER",
+      });
       router.push("/dashboard");
     } catch (err: unknown) {
       const code = (err as { code?: string }).code;

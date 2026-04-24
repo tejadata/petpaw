@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
+import { signOutAndRedirect } from "@/lib/auth-actions";
 import { getVendorByUserId } from "@/lib/data/vendor/vendors";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -23,6 +24,7 @@ export default function VendorPendingPage() {
   const [vendor, setVendor] = useState<Vendor | null>(null);
   const [loading, setLoading] = useState(true);
   const [checkingStatus, setCheckingStatus] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -52,6 +54,16 @@ export default function VendorPendingPage() {
     setCheckingStatus(true);
     await loadVendorStatus();
     setCheckingStatus(false);
+  }
+
+  async function handleSignOut() {
+    setSigningOut(true);
+
+    try {
+      await signOutAndRedirect("/vendor/login");
+    } finally {
+      setSigningOut(false);
+    }
   }
 
   const getStatusIcon = (status: Vendor["approvalStatus"]) => {
@@ -225,11 +237,8 @@ export default function VendorPendingPage() {
               </Button>
             )}
 
-            <Button
-              variant="outline"
-              onClick={() => router.replace("/vendor/login")}
-            >
-              Sign Out
+            <Button variant="outline" onClick={handleSignOut} disabled={signingOut}>
+              {signingOut ? "Signing out..." : "Sign Out"}
             </Button>
           </div>
 

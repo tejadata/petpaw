@@ -33,6 +33,9 @@ export function useVendorAuthGuard() {
       .then((v) => {
         setVendor(v);
 
+        const vendorHome =
+          !v ? "/vendor/onboarding" : v.approvalStatus === "approved" ? "/vendor/dashboard" : "/vendor/pending";
+
         // If vendor profile exists but not approved, redirect to pending page
         if (v && v.approvalStatus !== "approved" && pathname !== "/vendor/pending" && !isPublicRoute) {
           router.replace("/vendor/pending");
@@ -45,7 +48,7 @@ export function useVendorAuthGuard() {
 
         // If on login/signup but already authenticated, redirect
         if (isPublicRoute) {
-          router.replace(v ? "/vendor/dashboard" : "/vendor/onboarding");
+          router.replace(vendorHome);
         }
       })
       .catch(() => {

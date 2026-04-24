@@ -1,11 +1,33 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getAllUsers } from "@/lib/data/users";
 import type { User } from "@/types/user";
 
-export default async function AdminUsersPage() {
-  const users = await getAllUsers();
+export default function AdminUsersPage() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getAllUsers()
+      .then((data) => setUsers(data))
+      .catch((error) => {
+        console.error("Error loading users:", error);
+        setUsers([]);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex h-64 items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    );
+  }
 
   return (
     <div>

@@ -2,6 +2,7 @@ export const APP_NAME = "PawMatch";
 export const APP_DESCRIPTION =
   "Find your perfect dog breed match, get trusted health tips, and discover the best products for your furry friend.";
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+export const ADMIN_EMAILS = ["admin@pawmatch.com", "bhanusvist@gmail.com"] as const;
 
 export const NAV_LINKS = [
   { label: "Breeds", href: "/breeds" },

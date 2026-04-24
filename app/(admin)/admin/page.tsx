@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Dog,
@@ -9,9 +12,19 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { getAllUsers } from "@/lib/data/users";
+import { PendingVendorsWidget } from "@/components/admin/pending-vendors";
 
-export default async function AdminDashboardPage() {
-  const users = await getAllUsers();
+export default function AdminDashboardPage() {
+  const [userCount, setUserCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    getAllUsers()
+      .then((users) => setUserCount(users.length))
+      .catch((error) => {
+        console.error("Error loading admin dashboard users:", error);
+        setUserCount(0);
+      });
+  }, []);
 
   const stats = [
     {
@@ -52,7 +65,7 @@ export default async function AdminDashboardPage() {
     {
       icon: Users,
       label: "Users",
-      value: users.length.toString(),
+      value: userCount === null ? "..." : userCount.toString(),
       href: "/admin/users",
       color: "text-indigo-600",
     },
@@ -81,6 +94,10 @@ export default async function AdminDashboardPage() {
             </Card>
           </Link>
         ))}
+      </div>
+
+      <div className="mt-8">
+        <PendingVendorsWidget />
       </div>
     </div>
   );

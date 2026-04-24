@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -17,7 +18,8 @@ import {
   ArrowLeft,
   Store,
 } from "lucide-react";
-import { signOut } from "next-auth/react";
+import { getPendingVendors } from "@/lib/data/vendor/vendors";
+import { signOutAndRedirect } from "@/lib/auth-actions";
 
 const navItems = [
   { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
@@ -33,6 +35,11 @@ const navItems = [
 
 export function AdminSidebar() {
   const pathname = usePathname();
+  const [pendingCount, setPendingCount] = useState(0);
+
+  useEffect(() => {
+    getPendingVendors().then((vendors) => setPendingCount(vendors.length));
+  }, []);
 
   return (
     <aside className="flex h-full w-64 flex-col border-r bg-card">
@@ -59,6 +66,11 @@ export function AdminSidebar() {
             >
               <item.icon className="h-4 w-4" />
               {item.label}
+              {item.href === "/admin/vendors" && pendingCount > 0 && (
+                <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-xs font-medium text-white">
+                  {pendingCount}
+                </span>
+              )}
             </Link>
           );
         })}
@@ -73,7 +85,13 @@ export function AdminSidebar() {
           Back to Site
         </Link>
         <button
-          onClick={() => signOut({ callbackUrl: "/" })}
+          onClick={async () => {
+            try {
+              await signOutAndRedirect("/login");
+            } catch (error) {
+              console.error("Error signing out:", error);
+            }
+          }}
           className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           <LogOut className="h-4 w-4" />

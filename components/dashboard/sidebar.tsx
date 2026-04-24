@@ -17,9 +17,7 @@ import {
   X,
   Syringe,
 } from "lucide-react";
-import { signOut } from "firebase/auth";
-import { auth } from "@/lib/firebase";
-import { useRouter } from "next/navigation";
+import { signOutAndRedirect } from "@/lib/auth-actions";
 
 const navItems = [
   { href: "/dashboard", icon: LayoutDashboard, label: "Overview" },
@@ -62,13 +60,10 @@ function NavLinks({ pathname, onNavigate }: { pathname: string; onNavigate?: () 
 
 export function DashboardSidebar() {
   const pathname = usePathname();
-  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   async function handleSignOut() {
-    await signOut(auth);
-    // Hard navigate to bypass auth guard's redirect to /login
-    window.location.href = "/";
+    await signOutAndRedirect("/login");
   }
 
   return (
@@ -160,4 +155,3 @@ export function DashboardSidebar() {
     </>
   );
 }
-
