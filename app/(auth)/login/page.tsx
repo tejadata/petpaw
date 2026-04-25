@@ -20,16 +20,6 @@ export default function LoginPage() {
   const { user, userProfile, loading: authLoading } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [pageLoading, setPageLoading] = useState(true);
-
-  // Safety timeout for page loading
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setPageLoading(false);
-    }, 5000); // 5 second timeout
-
-    return () => clearTimeout(timeout);
-  }, []);
 
   // Handle redirect after successful login
   useEffect(() => {
@@ -87,7 +77,7 @@ export default function LoginPage() {
   }
 
   // Show loading spinner while auth is initializing
-  if (authLoading || pageLoading) {
+  if (authLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
