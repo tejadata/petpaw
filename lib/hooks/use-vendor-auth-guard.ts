@@ -15,6 +15,18 @@ export function useVendorAuthGuard() {
   const [vendor, setVendor] = useState<Vendor | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const refreshVendor = async () => {
+    if (!user) return;
+    try {
+      const v = await getVendorByUserId(user.uid);
+      setVendor(v);
+      return v;
+    } catch (error) {
+      console.error("Error refreshing vendor:", error);
+      return null;
+    }
+  };
+
   useEffect(() => {
     if (authLoading) return;
 
@@ -29,25 +41,24 @@ export function useVendorAuthGuard() {
     }
 
     // Authenticated — fetch vendor profile
-    getVendorByUserId(user.uid)
-      .then((v) => {
-        setVendor(v);
+    refreshVendor().then((v) => {
+      setLoading(false);
 
-        const vendorHome =
-          !v ? "/vendor/onboarding" : v.approvalStatus === "approved" ? "/vendor/dashboard" : "/vendor/pending";
+      const vendorHome =
+        !v ? "/vendor/onboarding" : v.approvalStatus === "approved" ? "/vendor/dashboard" : "/vendor/pending";
 
-        // If vendor profile exists but not approved, redirect to pending page
-        if (v && v.approvalStatus !== "approved" && pathname !== "/vendor/pending" && !isPublicRoute) {
-          router.replace("/vendor/pending");
-        }
+      // If vendor profile exists but not approved, redirect to pending page
+      if (v && v.approvalStatus !== "approved" && pathname !== "/vendor/pending" && !isPublicRoute) {
+        router.replace("/vendor/pending");
+      }
 
-        // If vendor is approved and on pending page, redirect to dashboard
-        if (v && v.approvalStatus === "approved" && pathname === "/vendor/pending") {
-          router.replace("/vendor/dashboard");
-        }
+      // If vendor is approved and on pending page, redirect to dashboard
+      if (v && v.approvalStatus === "approved" && pathname === "/vendor/pending") {
+        router.replace("/vendor/dashboard");
+      }
 
-        // If on login/signup but already authenticated, redirect
-        if (isPublicRoute) {
+      // If on login/signup but already authenticated, redirect
+      if (isPublicRoute) {
           router.replace(vendorHome);
         }
       })
@@ -59,5 +70,5 @@ export function useVendorAuthGuard() {
       });
   }, [user, authLoading, pathname, router]);
 
-  return { user, vendor, loading };
+  return { user, vendor, loading, refreshVendor };
 }

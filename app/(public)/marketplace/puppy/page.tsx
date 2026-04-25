@@ -15,7 +15,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { BreedTraits } from "@/components/breeds/breed-traits";
 import { VendorDetailsCard } from "@/components/vendor/vendor-details-card";
 import { ArrowLeft, Dog, CheckCircle2 } from "lucide-react";
-import { formatCurrencyInr, formatWeightKg } from "@/lib/utils";
+import { formatWeightKg } from "@/lib/utils";
+import { PriceDisplay } from "@/components/marketplace/price-display";
 import type { PuppyListing } from "@/types/vendor-puppy";
 import type { Store as StoreType } from "@/types/vendor";
 import type { Breed } from "@/types/breed";
@@ -41,9 +42,10 @@ export default function PublicPuppyDetailPage() {
         setStore(s);
       }
       if (data?.breed) {
-        const matched = staticBreeds.find(
-          (b) => b.name.toLowerCase() === data.breed.toLowerCase()
-        ) ?? null;
+        const matched =
+          staticBreeds.find(
+            (b) => b.name.toLowerCase() === data.breed.toLowerCase(),
+          ) ?? null;
         setBreedInfo(matched);
       }
       setLoading(false);
@@ -111,10 +113,18 @@ export default function PublicPuppyDetailPage() {
                   key={i}
                   onClick={() => setActiveImg(i)}
                   className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-colors ${
-                    i === activeImg ? "border-primary" : "border-transparent hover:border-muted-foreground/30"
+                    i === activeImg
+                      ? "border-primary"
+                      : "border-transparent hover:border-muted-foreground/30"
                   }`}
                 >
-                  <Image src={img.url} alt={`Photo ${i + 1}`} fill className="object-cover" sizes="80px" />
+                  <Image
+                    src={img.url}
+                    alt={`Photo ${i + 1}`}
+                    fill
+                    className="object-cover"
+                    sizes="80px"
+                  />
                 </button>
               ))}
             </div>
@@ -126,14 +136,18 @@ export default function PublicPuppyDetailPage() {
           <div>
             <div className="flex flex-wrap gap-2 mb-3">
               <Badge>{puppy.breed}</Badge>
-              <Badge variant="outline">{puppy.gender === "male" ? "♂ Male" : "♀ Female"}</Badge>
+              <Badge variant="outline">
+                {puppy.gender === "male" ? "♂ Male" : "♀ Female"}
+              </Badge>
               <Badge variant="outline">{puppy.ageInWeeks} weeks old</Badge>
             </div>
             <h1 className="text-3xl font-bold">{puppy.title}</h1>
-            <p className="mt-2 text-3xl font-bold text-primary">{formatCurrencyInr(puppy.price)}</p>
+            <PriceDisplay price={puppy.price} className="mt-2" />
           </div>
 
-          <p className="text-muted-foreground leading-relaxed">{puppy.description}</p>
+          <p className="text-muted-foreground leading-relaxed">
+            {puppy.description}
+          </p>
 
           {/* Health info */}
           <Card className="p-4 space-y-3">
@@ -144,13 +158,18 @@ export default function PublicPuppyDetailPage() {
                 { label: "Dewormed", value: puppy.dewormed },
                 { label: "Microchipped", value: puppy.microchipped },
                 { label: "Pedigree Available", value: puppy.pedigreeAvailable },
-                { label: "Health Certificate", value: puppy.healthCertificateAvailable },
+                {
+                  label: "Health Certificate",
+                  value: puppy.healthCertificateAvailable,
+                },
               ].map(({ label, value }) => (
                 <div key={label} className="flex items-center gap-2">
                   <CheckCircle2
                     className={`h-4 w-4 ${value ? "text-green-500" : "text-muted-foreground/30"}`}
                   />
-                  <span className={value ? "" : "text-muted-foreground"}>{label}</span>
+                  <span className={value ? "" : "text-muted-foreground"}>
+                    {label}
+                  </span>
                 </div>
               ))}
             </div>
@@ -172,7 +191,9 @@ export default function PublicPuppyDetailPage() {
           )}
 
           {puppy.disclaimer && (
-            <p className="text-xs text-muted-foreground italic">{puppy.disclaimer}</p>
+            <p className="text-xs text-muted-foreground italic">
+              {puppy.disclaimer}
+            </p>
           )}
         </div>
       </div>
@@ -191,11 +212,16 @@ export default function PublicPuppyDetailPage() {
               </div>
               <div>
                 <p className="text-muted-foreground">Weight</p>
-                <p className="mt-0.5 font-semibold">{formatWeightKg(breedInfo.weightMin)} – {formatWeightKg(breedInfo.weightMax)}</p>
+                <p className="mt-0.5 font-semibold">
+                  {formatWeightKg(breedInfo.weightMin)} –{" "}
+                  {formatWeightKg(breedInfo.weightMax)}
+                </p>
               </div>
               <div>
                 <p className="text-muted-foreground">Lifespan</p>
-                <p className="mt-0.5 font-semibold">{breedInfo.lifespanMin}–{breedInfo.lifespanMax} yrs</p>
+                <p className="mt-0.5 font-semibold">
+                  {breedInfo.lifespanMin}–{breedInfo.lifespanMax} yrs
+                </p>
               </div>
               <div>
                 <p className="text-muted-foreground">Breed Group</p>
@@ -205,7 +231,9 @@ export default function PublicPuppyDetailPage() {
           </Card>
 
           {/* Description */}
-          <p className="text-muted-foreground leading-relaxed">{breedInfo.description}</p>
+          <p className="text-muted-foreground leading-relaxed">
+            {breedInfo.description}
+          </p>
 
           {/* Traits + extras */}
           <div className="grid gap-8 md:grid-cols-2">
@@ -236,7 +264,9 @@ export default function PublicPuppyDetailPage() {
 
           <div className="pt-2">
             <Button asChild variant="outline" size="sm">
-              <a href={`/breeds/${breedInfo.slug}`}>View Full {breedInfo.name} Profile →</a>
+              <a href={`/breeds/${breedInfo.slug}`}>
+                View Full {breedInfo.name} Profile →
+              </a>
             </Button>
           </div>
         </div>

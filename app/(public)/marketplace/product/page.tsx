@@ -13,7 +13,7 @@ import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft, ShoppingBag } from "lucide-react";
 import { VendorDetailsCard } from "@/components/vendor/vendor-details-card";
-import { formatCurrencyInr } from "@/lib/utils";
+import { PriceDisplay } from "@/components/marketplace/price-display";
 import { VENDOR_PRODUCT_CATEGORY_LABELS } from "@/types/vendor-product";
 import type { VendorProduct } from "@/types/vendor-product";
 import type { Store as StoreType } from "@/types/vendor";
@@ -102,10 +102,18 @@ export default function PublicProductDetailPage() {
                   key={i}
                   onClick={() => setActiveImg(i)}
                   className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-colors ${
-                    i === activeImg ? "border-primary" : "border-transparent hover:border-muted-foreground/30"
+                    i === activeImg
+                      ? "border-primary"
+                      : "border-transparent hover:border-muted-foreground/30"
                   }`}
                 >
-                  <Image src={img.url} alt={`Photo ${i + 1}`} fill className="object-cover" sizes="80px" />
+                  <Image
+                    src={img.url}
+                    alt={`Photo ${i + 1}`}
+                    fill
+                    className="object-cover"
+                    sizes="80px"
+                  />
                 </button>
               ))}
             </div>
@@ -115,30 +123,25 @@ export default function PublicProductDetailPage() {
         {/* Details */}
         <div className="space-y-6">
           <div>
-            <Badge className="mb-3">{VENDOR_PRODUCT_CATEGORY_LABELS[product.category]}</Badge>
+            <Badge className="mb-3">
+              {VENDOR_PRODUCT_CATEGORY_LABELS[product.category]}
+            </Badge>
             <h1 className="text-3xl font-bold">{product.title}</h1>
-            <div className="mt-2 flex items-baseline gap-2">
-              {product.salePrice != null ? (
-                <>
-                  <span className="text-3xl font-bold text-primary">
-                    {formatCurrencyInr(product.salePrice)}
-                  </span>
-                  <span className="text-lg text-muted-foreground line-through">
-                    {formatCurrencyInr(product.price)}
-                  </span>
-                </>
-              ) : (
-                <span className="text-3xl font-bold text-primary">
-                  {formatCurrencyInr(product.price)}
-                </span>
-              )}
-            </div>
+            <PriceDisplay
+              price={product.price}
+              salePrice={product.salePrice}
+              className="mt-2"
+            />
             {product.brand && (
-              <p className="mt-1 text-sm text-muted-foreground">by {product.brand}</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                by {product.brand}
+              </p>
             )}
           </div>
 
-          <p className="text-muted-foreground leading-relaxed">{product.description}</p>
+          <p className="text-muted-foreground leading-relaxed">
+            {product.description}
+          </p>
 
           <Card className="p-4">
             <h3 className="font-semibold mb-3">Details</h3>
@@ -148,7 +151,12 @@ export default function PublicProductDetailPage() {
                 ["SKU", product.sku ?? "—"],
                 ["Weight", product.weight ?? "—"],
                 ["Age Suitability", product.ageSuitability ?? "All ages"],
-                ["In Stock", product.stockQuantity > 0 ? `${product.stockQuantity} available` : "Out of stock"],
+                [
+                  "In Stock",
+                  product.stockQuantity > 0
+                    ? `${product.stockQuantity} available`
+                    : "Out of stock",
+                ],
               ].map(([label, value]) => (
                 <div key={label}>
                   <dt className="text-muted-foreground">{label}</dt>

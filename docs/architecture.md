@@ -55,16 +55,16 @@ PawMatch uses a **hybrid data model** with two tiers:
 
 Public reference data is stored as TypeScript arrays in `lib/datasets/`:
 
-| Dataset | File | Records | Used By |
-|---|---|---|---|
-| Breeds | `lib/datasets/breeds.ts` | 29 breeds | Breed pages, quiz, sitemap |
-| Health Articles | `lib/datasets/health-articles.ts` | Multiple articles | Health pages, sitemap |
-| Health Categories | `lib/datasets/health-categories.ts` | 9 categories | Health category pages |
-| Homemade Food | `lib/datasets/homemade-food-articles.ts` | Multiple recipes | Food pages, sitemap |
-| Products | `lib/datasets/products.ts` | Products + 10 categories | Product pages |
-| FAQs | `lib/datasets/faqs.ts` | FAQ entries | FAQ page |
-| Quiz Questions | `lib/datasets/quiz-questions.ts` | 12+ questions | Quiz flow |
-| Symptoms | `lib/datasets/symptoms.ts` | Symptom rules | Symptom helper |
+| Dataset           | File                                     | Records                  | Used By                    |
+| ----------------- | ---------------------------------------- | ------------------------ | -------------------------- |
+| Breeds            | `lib/datasets/breeds.ts`                 | 29 breeds                | Breed pages, quiz, sitemap |
+| Health Articles   | `lib/datasets/health-articles.ts`        | Multiple articles        | Health pages, sitemap      |
+| Health Categories | `lib/datasets/health-categories.ts`      | 9 categories             | Health category pages      |
+| Homemade Food     | `lib/datasets/homemade-food-articles.ts` | Multiple recipes         | Food pages, sitemap        |
+| Products          | `lib/datasets/products.ts`               | Products + 10 categories | Product pages              |
+| FAQs              | `lib/datasets/faqs.ts`                   | FAQ entries              | FAQ page                   |
+| Quiz Questions    | `lib/datasets/quiz-questions.ts`         | 12+ questions            | Quiz flow                  |
+| Symptoms          | `lib/datasets/symptoms.ts`               | Symptom rules            | Symptom helper             |
 
 **Why static?** These datasets change infrequently and don't require real-time updates. Embedding them in the build ensures fast performance, zero Firestore reads for public pages, and full SEO indexability.
 
@@ -72,19 +72,19 @@ Public reference data is stored as TypeScript arrays in `lib/datasets/`:
 
 User-generated and vendor data lives in Cloud Firestore, accessed client-side:
 
-| Collection | Purpose | Access |
-|---|---|---|
-| `users` | User profiles | Owner only |
-| `pets` | Pet profiles | Owner only |
-| `dogProfiles` | Legacy pet collection | Owner only |
-| `medicalReports` | Medical records with file attachments | Owner only |
-| `reminders` | Pet care reminders | Owner only |
-| `favorites` | Saved breeds, articles, products | Owner only |
-| `vendors` | Vendor business profiles | Vendor only |
-| `stores` | Vendor store info | Public read, vendor write |
-| `puppyListings` | Puppy sale listings | Public read, vendor write |
-| `vendorProducts` | Vendor product listings | Public read, vendor write |
-| `inquiries` | Buyer inquiries to vendors | Vendor + buyer read |
+| Collection       | Purpose                               | Access                    |
+| ---------------- | ------------------------------------- | ------------------------- |
+| `users`          | User profiles                         | Owner only                |
+| `pets`           | Pet profiles                          | Owner only                |
+| `dogProfiles`    | Legacy pet collection                 | Owner only                |
+| `medicalReports` | Medical records with file attachments | Owner only                |
+| `reminders`      | Pet care reminders                    | Owner only                |
+| `favorites`      | Saved breeds, articles, products      | Owner only                |
+| `vendors`        | Vendor business profiles              | Vendor only               |
+| `stores`         | Vendor store info                     | Public read, vendor write |
+| `puppyListings`  | Puppy sale listings                   | Public read, vendor write |
+| `vendorProducts` | Vendor product listings               | Public read, vendor write |
+| `inquiries`      | Buyer inquiries to vendors            | Vendor + buyer read       |
 
 See [Firebase Data Model](firebase/data-model.md) for complete field schemas.
 
@@ -120,42 +120,48 @@ This abstraction means pages never import Firestore or dataset modules directly 
 
 ## Authentication Architecture
 
-PawMatch uses a **dual authentication system**:
+PawMatch uses **Firebase Authentication** with browser local persistence:
 
 ### Firebase Auth (Client-Side)
 
 - Initialized in `lib/firebase.ts`
 - State managed via `AuthProvider` in `lib/auth-context.tsx`
-- Provides `useAuth()` hook → `{ user, loading }`
+- Provides `useAuth()` hook → `{ user, loading, role }`
 - Handles email/password and Google sign-in
+- Role-based routing (ADMIN, USER, VENDOR)
 - Used for Firestore security rules (request.auth.uid)
 
-### NextAuth v5 (Session Management)
+### Auth Flows
 
-- Configured in `auth.ts` at project root
-- JWT session strategy (no database sessions)
-- Providers: Google OAuth + Credentials (dev demo accounts)
-- Custom user type with `role: "USER" | "ADMIN"`
-- Callbacks inject `id` and `role` into JWT and session
-- Sign-in page: `/login`
+**User Authentication:**
+
+- Login → Dashboard (`/dashboard`)
+- Admin Login → Admin Panel (`/admin`)
+- Vendor Login → Approval Check → Vendor Dashboard (`/vendor`)
+
+**Role Detection:**
+
+- Admin: Email domain check (`@pawmatch.com`)
+- Vendor: Firestore `vendors` collection lookup
+- User: Default role
 
 ### Auth Guards
 
 Two client-side hooks protect routes:
 
-| Hook | File | Behavior |
-|---|---|---|
-| `useAuthGuard()` | `lib/hooks/use-auth-guard.ts` | Redirects to `/login` if not authenticated. Checks `admin@pawmatch.com` for admin routes. |
-| `useVendorAuthGuard()` | `lib/hooks/use-vendor-auth-guard.ts` | Validates vendor authentication. Exempts public vendor routes (login, signup). |
+| Hook                   | File                                 | Behavior                                                                           |
+| ---------------------- | ------------------------------------ | ---------------------------------------------------------------------------------- |
+| `useAuthGuard()`       | `lib/hooks/use-auth-guard.ts`        | Redirects to `/login` if not authenticated. Checks role for admin routes.          |
+| `useVendorAuthGuard()` | `lib/hooks/use-vendor-auth-guard.ts` | Validates vendor authentication and approval status. Exempts public vendor routes. |
 
 ### Role-Based Access
 
-| Role | Access | Implementation |
-|---|---|---|
-| Public | `(public)` route group | No auth check |
-| User | `(dashboard)` route group | `useAuthGuard()` in layout |
-| Vendor | `(vendor)` route group | `useVendorAuthGuard()` in layout |
-| Admin | `(admin)` route group | `useAuthGuard()` + email check for `admin@pawmatch.com` |
+| Role   | Access                    | Implementation                                          |
+| ------ | ------------------------- | ------------------------------------------------------- |
+| Public | `(public)` route group    | No auth check                                           |
+| User   | `(dashboard)` route group | `useAuthGuard()` in layout                              |
+| Vendor | `(vendor)` route group    | `useVendorAuthGuard()` in layout                        |
+| Admin  | `(admin)` route group     | `useAuthGuard()` + email check for `admin@pawmatch.com` |
 
 ---
 
@@ -217,35 +223,35 @@ components/
 
 All user input is validated with Zod schemas in `lib/validations/`:
 
-| Schema | File | Used By |
-|---|---|---|
-| `loginSchema` | `validations/auth.ts` | Login form |
-| `registerSchema` | `validations/auth.ts` | Registration form |
-| `petSchema` | `validations/pet.ts` | Pet create/edit form |
-| `dogProfileSchema` | `validations/dog-profile.ts` | Legacy dog profile form |
-| `reminderSchema` | `validations/reminder.ts` | Reminder create/edit form |
-| `medicalReportSchema` | `validations/medical-report.ts` | Report upload form |
-| `contactSchema` | `validations/contact.ts` | Contact form |
-| `quizAnswersSchema` | `validations/quiz.ts` | Quiz submission |
-| `breedSchema` | `validations/breed.ts` | Admin breed management |
-| `articleSchema` | `validations/article.ts` | Admin article management |
-| `faqSchema` | `validations/faq.ts` | Admin FAQ management |
-| `productSchema` | `validations/product.ts` | Admin product management |
-| `vendorOnboardingSchema` | `validations/vendor.ts` | Vendor onboarding |
-| `puppyListingSchema` | `validations/vendor-puppy.ts` | Puppy listing form |
-| `vendorProductSchema` | `validations/vendor-product.ts` | Vendor product form |
-| `storeProfileSchema` | `validations/vendor-store.ts` | Store profile form |
+| Schema                   | File                            | Used By                   |
+| ------------------------ | ------------------------------- | ------------------------- |
+| `loginSchema`            | `validations/auth.ts`           | Login form                |
+| `registerSchema`         | `validations/auth.ts`           | Registration form         |
+| `petSchema`              | `validations/pet.ts`            | Pet create/edit form      |
+| `dogProfileSchema`       | `validations/dog-profile.ts`    | Legacy dog profile form   |
+| `reminderSchema`         | `validations/reminder.ts`       | Reminder create/edit form |
+| `medicalReportSchema`    | `validations/medical-report.ts` | Report upload form        |
+| `contactSchema`          | `validations/contact.ts`        | Contact form              |
+| `quizAnswersSchema`      | `validations/quiz.ts`           | Quiz submission           |
+| `breedSchema`            | `validations/breed.ts`          | Admin breed management    |
+| `articleSchema`          | `validations/article.ts`        | Admin article management  |
+| `faqSchema`              | `validations/faq.ts`            | Admin FAQ management      |
+| `productSchema`          | `validations/product.ts`        | Admin product management  |
+| `vendorOnboardingSchema` | `validations/vendor.ts`         | Vendor onboarding         |
+| `puppyListingSchema`     | `validations/vendor-puppy.ts`   | Puppy listing form        |
+| `vendorProductSchema`    | `validations/vendor-product.ts` | Vendor product form       |
+| `storeProfileSchema`     | `validations/vendor-store.ts`   | Store profile form        |
 
 ---
 
 ## External Integrations
 
-| Service | Purpose | Config |
-|---|---|---|
-| Firebase Auth | User authentication | `NEXT_PUBLIC_FIREBASE_*` env vars |
-| Cloud Firestore | Document database | Same Firebase project |
-| Cloud Storage | File uploads (images, reports) | Same Firebase project |
-| Google OAuth | Social sign-in | `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET` |
-| EmailJS | Reminder email notifications | `NEXT_PUBLIC_EMAILJS_*` env vars |
-| OpenAI GPT-4o | Symptom analysis | `OPENAI_API_KEY` env var |
-| Firebase Hosting | Static site deployment | `firebase.json` config |
+| Service          | Purpose                        | Config                                 |
+| ---------------- | ------------------------------ | -------------------------------------- |
+| Firebase Auth    | User authentication            | `NEXT_PUBLIC_FIREBASE_*` env vars      |
+| Cloud Firestore  | Document database              | Same Firebase project                  |
+| Cloud Storage    | File uploads (images, reports) | Same Firebase project                  |
+| Google OAuth     | Social sign-in                 | `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET` |
+| EmailJS          | Reminder email notifications   | `NEXT_PUBLIC_EMAILJS_*` env vars       |
+| OpenAI GPT-4o    | Symptom analysis               | `OPENAI_API_KEY` env var               |
+| Firebase Hosting | Static site deployment         | `firebase.json` config                 |

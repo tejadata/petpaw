@@ -12,14 +12,30 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search, Dog, ShoppingBag, MapPin, Heart } from "lucide-react";
 import { VENDOR_PRODUCT_CATEGORY_LABELS } from "@/types/vendor-product";
-import { formatCurrencyInr } from "@/lib/utils";
+import { PriceDisplay } from "@/components/marketplace/price-display";
 import type { PuppyListing } from "@/types/vendor-puppy";
-import type { VendorProduct, VendorProductCategory } from "@/types/vendor-product";
+import type {
+  VendorProduct,
+  VendorProductCategory,
+} from "@/types/vendor-product";
 
-const PRODUCT_CATEGORIES = Object.entries(VENDOR_PRODUCT_CATEGORY_LABELS) as [VendorProductCategory, string][];
+const PRODUCT_CATEGORIES = Object.entries(VENDOR_PRODUCT_CATEGORY_LABELS) as [
+  VendorProductCategory,
+  string,
+][];
 
-type PuppyPriceRange = "all" | "under_5000" | "5000_25000" | "25000_100000" | "above_100000";
-type ProductPriceRange = "all" | "under_500" | "500_2000" | "2000_10000" | "above_10000";
+type PuppyPriceRange =
+  | "all"
+  | "under_5000"
+  | "5000_25000"
+  | "25000_100000"
+  | "above_100000";
+type ProductPriceRange =
+  | "all"
+  | "under_500"
+  | "500_2000"
+  | "2000_10000"
+  | "above_10000";
 
 const PUPPY_PRICE_RANGES: { value: PuppyPriceRange; label: string }[] = [
   { value: "all", label: "All Prices" },
@@ -60,23 +76,28 @@ export default function MarketplaceClient() {
   const [tab, setTab] = useState<"puppies" | "products">("puppies");
   const [search, setSearch] = useState("");
   const [breedFilter, setBreedFilter] = useState("all");
-  const [categoryFilter, setCategoryFilter] = useState<VendorProductCategory | "all">("all");
-  const [puppyPriceRange, setPuppyPriceRange] = useState<PuppyPriceRange>("all");
-  const [productPriceRange, setProductPriceRange] = useState<ProductPriceRange>("all");
+  const [categoryFilter, setCategoryFilter] = useState<
+    VendorProductCategory | "all"
+  >("all");
+  const [puppyPriceRange, setPuppyPriceRange] =
+    useState<PuppyPriceRange>("all");
+  const [productPriceRange, setProductPriceRange] =
+    useState<ProductPriceRange>("all");
 
   useEffect(() => {
-    Promise.all([getPublishedPuppyListings(), getPublishedVendorProducts()]).then(
-      ([p, pr]) => {
-        setPuppies(p);
-        setProducts(pr);
-        setLoading(false);
-      }
-    );
+    Promise.all([
+      getPublishedPuppyListings(),
+      getPublishedVendorProducts(),
+    ]).then(([p, pr]) => {
+      setPuppies(p);
+      setProducts(pr);
+      setLoading(false);
+    });
   }, []);
 
   const breeds = useMemo(
     () => [...new Set(puppies.map((p) => p.breed))].sort(),
-    [puppies]
+    [puppies],
   );
 
   const filteredPuppies = useMemo(() => {
@@ -87,7 +108,11 @@ export default function MarketplaceClient() {
         p.breed.toLowerCase().includes(search.toLowerCase()) ||
         p.location.toLowerCase().includes(search.toLowerCase());
       const matchesBreed = breedFilter === "all" || p.breed === breedFilter;
-      return matchesSearch && matchesBreed && matchesPuppyPrice(p.price, puppyPriceRange);
+      return (
+        matchesSearch &&
+        matchesBreed &&
+        matchesPuppyPrice(p.price, puppyPriceRange)
+      );
     });
   }, [puppies, search, breedFilter, puppyPriceRange]);
 
@@ -95,9 +120,15 @@ export default function MarketplaceClient() {
     return products.filter((p) => {
       const matchesSearch =
         !search || p.title.toLowerCase().includes(search.toLowerCase());
-      const matchesCategory = categoryFilter === "all" || p.category === categoryFilter;
+      const matchesCategory =
+        categoryFilter === "all" || p.category === categoryFilter;
       const effectivePrice = p.salePrice ?? p.price;
-      return matchesSearch && matchesCategory && p.stockQuantity > 0 && matchesProductPrice(effectivePrice, productPriceRange);
+      return (
+        matchesSearch &&
+        matchesCategory &&
+        p.stockQuantity > 0 &&
+        matchesProductPrice(effectivePrice, productPriceRange)
+      );
     });
   }, [products, search, categoryFilter, productPriceRange]);
 
@@ -140,7 +171,11 @@ export default function MarketplaceClient() {
         <div className="relative flex-1 min-w-[200px]">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder={tab === "puppies" ? "Search by name, breed, city…" : "Search products…"}
+            placeholder={
+              tab === "puppies"
+                ? "Search by name, breed, city…"
+                : "Search products…"
+            }
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="pl-9"
@@ -154,41 +189,55 @@ export default function MarketplaceClient() {
           >
             <option value="all">All Breeds</option>
             {breeds.map((b) => (
-              <option key={b} value={b}>{b}</option>
+              <option key={b} value={b}>
+                {b}
+              </option>
             ))}
           </select>
         )}
         {tab === "puppies" && (
           <select
             value={puppyPriceRange}
-            onChange={(e) => setPuppyPriceRange(e.target.value as PuppyPriceRange)}
+            onChange={(e) =>
+              setPuppyPriceRange(e.target.value as PuppyPriceRange)
+            }
             className="rounded-md border bg-transparent px-3 py-2 text-sm"
           >
             {PUPPY_PRICE_RANGES.map((r) => (
-              <option key={r.value} value={r.value}>{r.label}</option>
+              <option key={r.value} value={r.value}>
+                {r.label}
+              </option>
             ))}
           </select>
         )}
         {tab === "products" && (
           <select
             value={categoryFilter}
-            onChange={(e) => setCategoryFilter(e.target.value as VendorProductCategory | "all")}
+            onChange={(e) =>
+              setCategoryFilter(e.target.value as VendorProductCategory | "all")
+            }
             className="rounded-md border bg-transparent px-3 py-2 text-sm"
           >
             <option value="all">All Categories</option>
             {PRODUCT_CATEGORIES.map(([v, l]) => (
-              <option key={v} value={v}>{l}</option>
+              <option key={v} value={v}>
+                {l}
+              </option>
             ))}
           </select>
         )}
         {tab === "products" && (
           <select
             value={productPriceRange}
-            onChange={(e) => setProductPriceRange(e.target.value as ProductPriceRange)}
+            onChange={(e) =>
+              setProductPriceRange(e.target.value as ProductPriceRange)
+            }
             className="rounded-md border bg-transparent px-3 py-2 text-sm"
           >
             {PRODUCT_PRICE_RANGES.map((r) => (
-              <option key={r.value} value={r.value}>{r.label}</option>
+              <option key={r.value} value={r.value}>
+                {r.label}
+              </option>
             ))}
           </select>
         )}
@@ -215,57 +264,82 @@ export default function MarketplaceClient() {
         ) : (
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filteredPuppies.map((puppy) => (
-              <Link key={puppy.id} href={`/marketplace/puppy?id=${puppy.id}`}>
-                <Card className="group overflow-hidden transition-shadow hover:shadow-lg">
-                  <div className="relative aspect-[4/3] bg-muted">
-                    {puppy.images[0] ? (
-                      <Image
-                        src={puppy.images[0].url}
-                        alt={puppy.title}
-                        fill
-                        className="object-cover transition-transform group-hover:scale-105"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      />
-                    ) : (
-                      <div className="flex h-full items-center justify-center">
-                        <Dog className="h-12 w-12 text-muted-foreground/40" />
-                      </div>
-                    )}
-                    <Badge className="absolute top-3 left-3">{puppy.breed}</Badge>
-                    {puppy.saleStatus === "sold" && (
-                      <span className="absolute top-3 right-3 rounded-md bg-red-600 px-2.5 py-1 text-xs font-bold text-white tracking-wide z-10">SOLD</span>
-                    )}
-                    {puppy.featured && puppy.saleStatus !== "sold" && (
-                      <Badge variant="secondary" className="absolute top-3 right-3 gap-1">
-                        <Heart className="h-3 w-3" /> Featured
+              <div key={puppy.id} className="group relative">
+                <Link href={`/marketplace/puppy?id=${puppy.id}`}>
+                  <Card className="overflow-hidden transition-shadow hover:shadow-lg h-full">
+                    <div className="relative aspect-[4/3] bg-muted">
+                      {puppy.images[0] ? (
+                        <Image
+                          src={puppy.images[0].url}
+                          alt={puppy.title}
+                          fill
+                          className="object-cover transition-transform group-hover:scale-105"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center">
+                          <Dog className="h-12 w-12 text-muted-foreground/40" />
+                        </div>
+                      )}
+                      <Badge className="absolute top-3 left-3">
+                        {puppy.breed}
                       </Badge>
-                    )}
-                  </div>
-                  <div className="p-4 space-y-2">
-                    <div className="flex items-start justify-between gap-2">
-                      <h3 className="font-semibold line-clamp-1">{puppy.title}</h3>
-                      <span className="shrink-0 text-lg font-bold text-primary">
-                        {formatCurrencyInr(puppy.price)}
-                      </span>
+                      {puppy.saleStatus === "sold" && (
+                        <span className="absolute top-3 right-3 rounded-md bg-red-600 px-2.5 py-1 text-xs font-bold text-white tracking-wide z-10">
+                          SOLD
+                        </span>
+                      )}
+                      {puppy.featured && puppy.saleStatus !== "sold" && (
+                        <Badge
+                          variant="secondary"
+                          className="absolute top-3 right-3 gap-1"
+                        >
+                          <Heart className="h-3 w-3" /> Featured
+                        </Badge>
+                      )}
                     </div>
-                    <p className="text-sm text-muted-foreground line-clamp-2">
-                      {puppy.shortDescription}
-                    </p>
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground pt-1">
-                      <span className="flex items-center gap-1">
-                        <MapPin className="h-3 w-3" /> {puppy.location}
-                      </span>
-                      <span>{puppy.gender === "male" ? "♂ Male" : "♀ Female"}</span>
-                      <span>{puppy.ageInWeeks}w old</span>
+                    <div className="p-4 space-y-3">
+                      <div>
+                        <h3 className="font-semibold line-clamp-1">
+                          {puppy.title}
+                        </h3>
+                      </div>
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {puppy.shortDescription}
+                      </p>
+                      <div className="flex items-center gap-4 text-xs text-muted-foreground pt-1">
+                        <span className="flex items-center gap-1">
+                          <MapPin className="h-3 w-3" /> {puppy.location}
+                        </span>
+                        <span>
+                          {puppy.gender === "male" ? "♂ Male" : "♀ Female"}
+                        </span>
+                        <span>{puppy.ageInWeeks}w old</span>
+                      </div>
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {puppy.vaccinated && (
+                          <Badge variant="outline" className="text-xs">
+                            Vaccinated
+                          </Badge>
+                        )}
+                        {puppy.dewormed && (
+                          <Badge variant="outline" className="text-xs">
+                            Dewormed
+                          </Badge>
+                        )}
+                        {puppy.microchipped && (
+                          <Badge variant="outline" className="text-xs">
+                            Microchipped
+                          </Badge>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex flex-wrap gap-1.5 pt-1">
-                      {puppy.vaccinated && <Badge variant="outline" className="text-xs">Vaccinated</Badge>}
-                      {puppy.dewormed && <Badge variant="outline" className="text-xs">Dewormed</Badge>}
-                      {puppy.microchipped && <Badge variant="outline" className="text-xs">Microchipped</Badge>}
-                    </div>
-                  </div>
-                </Card>
-              </Link>
+                  </Card>
+                </Link>
+                <div className="absolute bottom-4 right-4 z-20">
+                  <PriceDisplay price={puppy.price} buttonOnly />
+                </div>
+              </div>
             ))}
           </div>
         )
@@ -281,57 +355,54 @@ export default function MarketplaceClient() {
         </div>
       ) : (
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredProducts.map((product) => (
-            <Link key={product.id} href={`/marketplace/product?id=${product.id}`}>
-              <Card className="group overflow-hidden transition-shadow hover:shadow-lg">
-                <div className="relative aspect-[4/3] bg-muted">
-                  {product.images[0] ? (
-                    <Image
-                      src={product.images[0].url}
-                      alt={product.title}
-                      fill
-                      className="object-cover transition-transform group-hover:scale-105"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center">
-                      <ShoppingBag className="h-12 w-12 text-muted-foreground/40" />
-                    </div>
-                  )}
-                  <Badge className="absolute top-3 left-3">
-                    {VENDOR_PRODUCT_CATEGORY_LABELS[product.category]}
-                  </Badge>
-                </div>
-                <div className="p-4 space-y-2">
-                  <div className="flex items-start justify-between gap-2">
-                    <h3 className="font-semibold line-clamp-1">{product.title}</h3>
-                    <div className="shrink-0 text-right">
-                      {product.salePrice != null ? (
-                        <>
-                          <span className="text-lg font-bold text-primary">
-                            {formatCurrencyInr(product.salePrice)}
-                          </span>
-                          <span className="ml-1.5 text-xs text-muted-foreground line-through">
-                            {formatCurrencyInr(product.price)}
-                          </span>
-                        </>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredProducts.map((product) => (
+              <div key={product.id} className="group relative">
+                <Link href={`/marketplace/product?id=${product.id}`}>
+                  <Card className="overflow-hidden transition-shadow hover:shadow-lg h-full">
+                    <div className="relative aspect-[4/3] bg-muted">
+                      {product.images[0] ? (
+                        <Image
+                          src={product.images[0].url}
+                          alt={product.title}
+                          fill
+                          className="object-cover transition-transform group-hover:scale-105"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
                       ) : (
-                        <span className="text-lg font-bold text-primary">
-                          {formatCurrencyInr(product.price)}
-                        </span>
+                        <div className="flex h-full items-center justify-center">
+                          <ShoppingBag className="h-12 w-12 text-muted-foreground/40" />
+                        </div>
+                      )}
+                      <Badge className="absolute top-3 left-3">
+                        {VENDOR_PRODUCT_CATEGORY_LABELS[product.category]}
+                      </Badge>
+                    </div>
+                    <div className="p-4 space-y-3">
+                      <h3 className="font-semibold line-clamp-1">
+                        {product.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {product.shortDescription}
+                      </p>
+                      {product.brand && (
+                        <p className="text-xs text-muted-foreground">
+                          by {product.brand}
+                        </p>
                       )}
                     </div>
-                  </div>
-                  <p className="text-sm text-muted-foreground line-clamp-2">
-                    {product.shortDescription}
-                  </p>
-                  {product.brand && (
-                    <p className="text-xs text-muted-foreground">by {product.brand}</p>
-                  )}
+                  </Card>
+                </Link>
+                <div className="absolute bottom-4 right-4 z-20">
+                  <PriceDisplay
+                    price={product.price}
+                    salePrice={product.salePrice}
+                    buttonOnly
+                  />
                 </div>
-              </Card>
-            </Link>
-          ))}
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </>

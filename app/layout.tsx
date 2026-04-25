@@ -5,6 +5,7 @@ import { APP_NAME, APP_DESCRIPTION } from "@/lib/constants";
 import { AuthProvider } from "@/lib/auth-context";
 import { JsonLd } from "@/components/shared/json-ld";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
+import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,7 +29,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en-IN" suppressHydrationWarning>
-      <body className={`${inter.className} antialiased`} suppressHydrationWarning>
+      <body
+        className={`${inter.className} antialiased`}
+        suppressHydrationWarning
+      >
+        {/* Google Analytics */}
+        <GoogleAnalytics />
+
         {/* Site-wide structured data — embedded in every static HTML page */}
         <JsonLd schema={organizationSchema()} />
         <JsonLd schema={websiteSchema()} />

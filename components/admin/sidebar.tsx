@@ -18,8 +18,9 @@ import {
   ArrowLeft,
   Store,
 } from "lucide-react";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import { getPendingVendors } from "@/lib/data/vendor/vendors";
-import { signOutAndRedirect } from "@/lib/auth-actions";
 
 const navItems = [
   { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
@@ -87,7 +88,8 @@ export function AdminSidebar() {
         <button
           onClick={async () => {
             try {
-              await signOutAndRedirect("/login");
+              await signOut(auth);
+              window.location.href = "/";
             } catch (error) {
               console.error("Error signing out:", error);
             }

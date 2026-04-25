@@ -19,16 +19,18 @@ import {
   AlertTriangle,
   Plus,
   Store,
+  RefreshCw,
 } from "lucide-react";
 import type { PuppyListing } from "@/types/vendor-puppy";
 import type { VendorProduct } from "@/types/vendor-product";
 
 export default function VendorDashboardPage() {
-  const { user, vendor } = useVendorAuthGuard();
+  const { user, vendor, refreshVendor } = useVendorAuthGuard();
   const [puppies, setPuppies] = useState<PuppyListing[]>([]);
   const [products, setProducts] = useState<VendorProduct[]>([]);
   const [hasStore, setHasStore] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [refreshingStatus, setRefreshingStatus] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -46,14 +48,27 @@ export default function VendorDashboardPage() {
     load();
   }, [user]);
 
-  const activePuppies = puppies.filter((p) => p.isPublished && p.saleStatus === "available").length;
+  const activePuppies = puppies.filter(
+    (p) => p.isPublished && p.saleStatus === "available",
+  ).length;
   const soldPuppies = puppies.filter((p) => p.saleStatus === "sold").length;
   const activeProducts = products.filter((p) => p.isPublished).length;
-  const lowStockProducts = products.filter((p) => p.stockQuantity <= 5 && p.stockQuantity > 0).length;
+  const lowStockProducts = products.filter(
+    (p) => p.stockQuantity <= 5 && p.stockQuantity > 0,
+  ).length;
 
   const recentListings = [...puppies, ...products]
     .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
     .slice(0, 5);
+
+  const handleRefreshStatus = async () => {
+    setRefreshingStatus(true);
+    try {
+      await refreshVendor();
+    } finally {
+      setRefreshingStatus(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -84,12 +99,26 @@ export default function VendorDashboardPage() {
         <Card className="border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-900 dark:bg-yellow-950/30">
           <div className="flex items-start gap-3">
             <AlertTriangle className="mt-0.5 h-5 w-5 text-yellow-600" />
-            <div>
-              <div className="flex items-center gap-2">
-                <p className="font-medium text-yellow-800 dark:text-yellow-300">
-                  Account Status:
-                </p>
-                <ApprovalStatusBadge status={vendor.approvalStatus} />
+            <div className="flex-1">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <p className="font-medium text-yellow-800 dark:text-yellow-300">
+                    Account Status:
+                  </p>
+                  <ApprovalStatusBadge status={vendor.approvalStatus} />
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleRefreshStatus}
+                  disabled={refreshingStatus}
+                  className="border-yellow-300 text-yellow-700 hover:bg-yellow-100 dark:border-yellow-700 dark:text-yellow-300 dark:hover:bg-yellow-900/20"
+                >
+                  <RefreshCw
+                    className={`h-4 w-4 mr-2 ${refreshingStatus ? "animate-spin" : ""}`}
+                  />
+                  {refreshingStatus ? "Checking..." : "Refresh Status"}
+                </Button>
               </div>
               <p className="mt-1 text-sm text-yellow-700 dark:text-yellow-400">
                 {vendor.approvalStatus === "pending"
@@ -180,9 +209,12 @@ export default function VendorDashboardPage() {
                     className="flex items-center justify-between rounded-lg border p-3 transition-colors hover:bg-muted/50"
                   >
                     <div className="min-w-0 flex-1">
-                      <p className="truncate font-medium text-sm">{item.title}</p>
+                      <p className="truncate font-medium text-sm">
+                        {item.title}
+                      </p>
                       <p className="text-xs text-muted-foreground">
-                        {isPuppy ? "Puppy" : "Product"} &middot; {item.createdAt.toLocaleDateString()}
+                        {isPuppy ? "Puppy" : "Product"} &middot;{" "}
+                        {item.createdAt.toLocaleDateString()}
                       </p>
                     </div>
                     <ListingStatusBadge

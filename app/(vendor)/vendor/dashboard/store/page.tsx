@@ -161,6 +161,8 @@ export default function StoreProfilePage() {
         storeType: vendor?.storeType,
       };
 
+  const approvalStatus = vendor?.approvalStatus ?? store?.approvalStatus;
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -174,7 +176,14 @@ export default function StoreProfilePage() {
               : "Create your store to start adding listings."}
           </p>
         </div>
-        {store && <ApprovalStatusBadge status={store.approvalStatus} />}
+        {approvalStatus && (
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">
+              Account Status
+            </span>
+            <ApprovalStatusBadge status={approvalStatus} />
+          </div>
+        )}
       </div>
 
       {/* Logo & Banner uploads */}

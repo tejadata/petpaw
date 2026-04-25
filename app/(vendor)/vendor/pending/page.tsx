@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/lib/auth-context";
+import { useVendorAuthGuard } from "@/lib/hooks/use-vendor-auth-guard";
 import { signOutAndRedirect } from "@/lib/auth-actions";
-import { getVendorByUserId } from "@/lib/data/vendor/vendors";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,7 +18,7 @@ import { APPROVAL_STATUS_LABELS } from "@/types/vendor";
 import type { Vendor } from "@/types/vendor";
 
 export default function VendorPendingPage() {
-  const { user } = useAuth();
+  const { user, vendor: currentVendor, refreshVendor } = useVendorAuthGuard();
   const router = useRouter();
   const [vendor, setVendor] = useState<Vendor | null>(null);
   const [loading, setLoading] = useState(true);
@@ -28,32 +27,31 @@ export default function VendorPendingPage() {
 
   useEffect(() => {
     if (!user) return;
-    loadVendorStatus();
+    // Vendor data is loaded by useVendorAuthGuard
+    setLoading(false);
   }, [user]);
 
-  async function loadVendorStatus() {
-    if (!user) return;
-
-    try {
-      const vendorData = await getVendorByUserId(user.uid);
-      setVendor(vendorData);
-
+  // Update local vendor state when currentVendor changes
+  useEffect(() => {
+    if (currentVendor) {
+      setVendor(currentVendor);
       // If approved, redirect to dashboard
-      if (vendorData?.approvalStatus === "approved") {
+      if (currentVendor.approvalStatus === "approved") {
         router.replace("/vendor/dashboard");
-        return;
       }
-    } catch (error) {
-      console.error("Error loading vendor status:", error);
-    } finally {
-      setLoading(false);
     }
-  }
+  }, [currentVendor]);
 
   async function checkStatus() {
     setCheckingStatus(true);
-    await loadVendorStatus();
-    setCheckingStatus(false);
+    try {
+      const updatedVendor = await refreshVendor();
+      if (updatedVendor) {
+        setVendor(updatedVendor);
+      }
+    } finally {
+      setCheckingStatus(false);
+    }
   }
 
   async function handleSignOut() {
@@ -237,7 +235,11 @@ export default function VendorPendingPage() {
               </Button>
             )}
 
-            <Button variant="outline" onClick={handleSignOut} disabled={signingOut}>
+            <Button
+              variant="outline"
+              onClick={handleSignOut}
+              disabled={signingOut}
+            >
               {signingOut ? "Signing out..." : "Sign Out"}
             </Button>
           </div>

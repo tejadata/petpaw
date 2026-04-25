@@ -9,9 +9,6 @@ import {
 } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useAuth } from "@/lib/auth-context";
-import { getVendorByUserId } from "@/lib/data/vendor/vendors";
-import { createUserProfile } from "@/lib/data/users";
-import { ADMIN_EMAILS } from "@/lib/constants";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,70 +20,27 @@ export default function LoginPage() {
   const { user, userProfile, loading: authLoading } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
+
+  // Safety timeout for page loading
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setPageLoading(false);
+    }, 5000); // 5 second timeout
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   // Handle redirect after successful login
   useEffect(() => {
-    if (authLoading || !user) return;
-
-    if (userProfile) {
+    if (user && userProfile && !authLoading) {
       if (userProfile.role === "ADMIN") {
         router.replace("/admin");
       } else {
         router.replace("/dashboard");
       }
-      return;
     }
-
-    let cancelled = false;
-
-    getVendorByUserId(user.uid)
-      .then(async (vendor) => {
-        if (cancelled) return;
-
-        if (vendor) {
-          if (vendor.approvalStatus === "approved") {
-            router.replace("/vendor/dashboard");
-          } else {
-            router.replace("/vendor/pending");
-          }
-          return;
-        }
-
-        const isAdminEmail = ADMIN_EMAILS.some((adminEmail) => adminEmail === user.email);
-
-        await createUserProfile(user.uid, {
-          name: user.displayName ?? null,
-          email: user.email ?? "",
-          image: user.photoURL ?? null,
-          role: isAdminEmail ? "ADMIN" : "USER",
-        }).catch(() => null);
-
-        if (!cancelled) {
-          router.replace("/dashboard");
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          router.replace("/dashboard");
-        }
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [user, userProfile, authLoading, router]);
-
-  // Show loading spinner while auth is initializing
-  if (authLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent mx-auto mb-4" />
-          <p className="text-sm text-muted-foreground">Loading...</p>
-        </div>
-      </div>
-    );
-  }
+  }, [user, userProfile, authLoading]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -130,6 +84,18 @@ export default function LoginPage() {
     } finally {
       setLoading(false);
     }
+  }
+
+  // Show loading spinner while auth is initializing
+  if (authLoading || pageLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent mx-auto mb-4" />
+          <p className="text-sm text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   return (

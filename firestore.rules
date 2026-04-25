@@ -84,6 +84,12 @@ service cloud.firestore {
       allow write: if isOwner(userId);
     }
 
+    // ── Marketplace Contacts (Public Lead Generation) ──────────────
+    match /contacts/{contactId} {
+      allow write: if true; // Allow anyone to submit contact info
+      allow read: if isAdmin(); // Only admins can read
+    }
+
     // ═══════════════════════════════════════════════════════════════
     // ── Vendor Module ─────────────────────────────────────────────
     // ═══════════════════════════════════════════════════════════════
