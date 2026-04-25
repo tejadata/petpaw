@@ -86,6 +86,19 @@ export function breadcrumbSchema(items: BreadcrumbItem[]): SchemaBase {
 
 // ─── Article — health articles ────────────────────────────────────────────────
 
+/**
+ * Build shared Article schema for health articles.
+ *
+ * This helper intentionally does NOT emit `reviewedBy` unless a fully specified
+ * reviewer object is available and visible in the page content.
+ *
+ * Validation strategy:
+ * - Keep all health article schema logic centralized here.
+ * - Only emit Google-supported Article fields.
+ * - Do not emit `reviewedBy` from a boolean badge alone.
+ * - If review metadata is later supported, add a reviewedBy helper with a real
+ *   reviewer name, @type, and optional URL/affiliation.
+ */
 export function healthArticleSchema(article: HealthArticle): SchemaBase {
   return {
     "@context": "https://schema.org",
@@ -109,9 +122,10 @@ export function healthArticleSchema(article: HealthArticle): SchemaBase {
       "@id": `${APP_URL}/health/${article.slug}`,
     },
     keywords: [article.categoryName, "dog health India", "pet care", article.ageGroup],
-    ...(article.vetReviewed && {
-      reviewedBy: { "@type": "Organization", name: "Veterinary Review Team" },
-    }),
+    // Only emit review markup when there is an actual reviewer identity visible on the page.
+    // The current article data only tracks a boolean vetReviewed flag, and does not provide
+    // a concrete reviewer name or organization with verifiable credentials.
+    // Google-supported structured data should not include fake reviewer details.
   };
 }
 

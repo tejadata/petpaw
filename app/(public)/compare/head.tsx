@@ -8,7 +8,7 @@ export default function CompareHead() {
         name="description"
         content="Compare dog breeds side by side on PetsPaw to review traits, lifestyle fit, and temperament."
       />
-      <meta name="robots" content="noindex, follow" />
+      <meta name="robots" content="index, follow" />
       <link rel="canonical" href={`${APP_URL}/compare`} />
     </>
   );

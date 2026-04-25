@@ -1,0 +1,173 @@
+# PetsPaw
+
+> Find trusted dog breed guides, pet care advice, puppies, and pet products in India.
+
+PetsPaw (https://petspaw.in) is India's comprehensive dog parenting platform. We help dog parents discover the right breeds, access trusted pet care advice, find puppies from verified vendors, and shop curated pet products — all in one place.
+
+## Core Values
+
+- Adoption-first advocacy
+- Education over sales
+- Ethical breeding support
+- Lifetime commitment to responsible pet ownership
+
+## Key Features
+
+### Breed Explorer
+Browse 29+ dog breeds with detailed profiles covering traits, temperament, exercise needs, grooming, and compatibility.
+- Browse all breeds: https://petspaw.in/breeds
+- Each breed has a dedicated page: https://petspaw.in/breeds/{breed-slug}
+
+### Breed Quiz
+A 14-question interactive quiz (~5 minutes) that recommends compatible dog breeds based on your lifestyle, living space, budget, experience, and preferences.
+- Take the quiz: https://petspaw.in/quiz
+
+### Breed Comparison
+Compare up to 3 dog breeds side by side — traits, exercise needs, grooming, and compatibility metrics.
+- Compare breeds: https://petspaw.in/compare
+
+### Marketplace
+Browse puppies for sale and pet products from verified vendors across India, with category filtering.
+- Visit marketplace: https://petspaw.in/marketplace
+
+### Pet Care Hub
+Combined resource center with health articles organized by category and homemade food recipes by diet type and life stage.
+- Pet care hub: https://petspaw.in/pet-care
+
+### Dog Health Articles
+Educational articles on dog health topics — nutrition, training, grooming, common diseases, and more. 30 in-depth articles covering everything from puppy care to senior dog health, with special focus on Indian climate and conditions.
+- Health articles: https://petspaw.in/health
+- Individual articles: https://petspaw.in/health/{article-slug}
+- Browse by category: https://petspaw.in/health/category/{category-slug}
+
+#### Health Categories
+- Puppy Care: https://petspaw.in/health/category/puppy-care
+- Adult Dog Care: https://petspaw.in/health/category/adult-dog-care
+- Senior Dog Care: https://petspaw.in/health/category/senior-dog-care
+- Preventive Care: https://petspaw.in/health/category/preventive-care
+- Nutrition: https://petspaw.in/health/category/nutrition
+- Exercise & Fitness: https://petspaw.in/health/category/exercise-fitness
+- Grooming: https://petspaw.in/health/category/grooming
+- Dental Care: https://petspaw.in/health/category/dental-care
+- Mental Health: https://petspaw.in/health/category/mental-health
+- Skin & Allergies: https://petspaw.in/health/category/skin-allergies
+
+#### All Health Articles (30)
+- Your Puppy's First Year: A Complete Care Guide: https://petspaw.in/health/puppy-first-year-care-guide
+- Understanding Your Dog's Vaccination Schedule: https://petspaw.in/health/dog-vaccination-schedule
+- Choosing the Right Food for Your Dog's Life Stage: https://petspaw.in/health/dog-food-life-stages
+- Essential Grooming Guide: Keeping Your Dog Clean and Healthy: https://petspaw.in/health/essential-grooming-guide
+- How Much Exercise Does Your Dog Really Need?: https://petspaw.in/health/how-much-exercise-dogs-need
+- Caring for Your Senior Dog: What Changes to Expect: https://petspaw.in/health/senior-dog-care-guide
+- Dog Dental Health: Why It Matters More Than You Think: https://petspaw.in/health/dog-dental-health-guide
+- Flea and Tick Prevention: Protecting Your Dog Year-Round: https://petspaw.in/health/flea-tick-prevention-guide
+- Understanding and Managing Dog Anxiety: https://petspaw.in/health/understanding-dog-anxiety
+- Socializing Your Puppy: The Window That Shapes Their Life: https://petspaw.in/health/puppy-socialization-guide
+- Dog Deworming Basics: What Every Owner Should Know: https://petspaw.in/health/dog-deworming-basics
+- Spaying and Neutering: Timing, Benefits, and Questions to Ask: https://petspaw.in/health/spaying-neutering-guide
+- Toxic Foods and Household Hazards for Dogs: https://petspaw.in/health/toxic-foods-household-hazards-dogs
+- Hot Weather Safety: Preventing Heat Stress and Heatstroke: https://petspaw.in/health/dog-hot-weather-safety
+- Healthy Weight in Dogs: Preventing Obesity Before It Starts: https://petspaw.in/health/dog-healthy-weight-guide
+- Ear Care for Dogs: Preventing Irritation and Infection: https://petspaw.in/health/dog-ear-care-guide
+- Why Is My Dog Itchy? Common Causes of Skin Irritation: https://petspaw.in/health/dog-itchy-skin-common-causes
+- Helping Senior Dogs Stay Mobile and Comfortable: https://petspaw.in/health/senior-dog-mobility-comfort
+- Dog First Aid Basics: What Every Owner Should Know: https://petspaw.in/health/dog-first-aid-basics
+- Tick Fever in Dogs: Recognising and Preventing a Common Indian Threat: https://petspaw.in/health/tick-fever-dogs-india
+- Monsoon Health Hazards: Keeping Your Dog Safe During Rainy Season: https://petspaw.in/health/monsoon-dog-health-hazards-india
+- Parvovirus in Dogs: What Indian Pet Owners Must Know: https://petspaw.in/health/parvovirus-dogs-india
+- Indian Home Food for Dogs: What's Safe and What to Avoid: https://petspaw.in/health/indian-home-food-dogs-safe-avoid
+- Summer Heat Safety: Protecting Your Dog in Indian Summers: https://petspaw.in/health/summer-heat-safety-dogs-india
+- Adopting a Street Puppy in India: Health Checklist and First Steps: https://petspaw.in/health/adopting-street-puppy-india-health
+- Dealing with Firecracker Anxiety in Dogs During Diwali: https://petspaw.in/health/firecracker-anxiety-dogs-diwali
+- Mange in Dogs: Types, Treatment, and Recovery in Indian Conditions: https://petspaw.in/health/mange-dogs-india-treatment
+- Kidney Health in Older Dogs: Early Signs and Diet Management: https://petspaw.in/health/kidney-health-senior-dogs
+- Safe Exercise Guide for Indian Dog Breeds and Climate: https://petspaw.in/health/exercise-guide-indian-dogs-climate
+- Leptospirosis in Dogs: A Preventable Killer Common in India: https://petspaw.in/health/leptospirosis-dogs-india-prevention
+
+### Homemade Dog Food Recipes
+Vet-reviewed vegetarian and non-vegetarian meal recipes organized by life stage (puppy, adult, senior). 23 detailed recipes with ingredients, preparation steps, and nutritional guidance. Always consult a veterinarian before changing your dog's diet.
+- Homemade food: https://petspaw.in/homemade-food
+- Individual recipes: https://petspaw.in/homemade-food/{recipe-slug}
+
+#### All Homemade Food Recipes (23)
+
+Vegetarian Puppy Recipes:
+- Veg Puppy Bowl: Gentle Growth Starter: https://petspaw.in/homemade-food/veg-puppy-growth-starter
+- Veg Puppy Bowl: Rice Pumpkin Comfort Mash: https://petspaw.in/homemade-food/veg-puppy-rice-pumpkin-comfort-mash
+- Veg Puppy Bowl: Banana Oats Soft Porridge: https://petspaw.in/homemade-food/veg-puppy-banana-oats-porridge
+- Veg Puppy Bowl: Moong Dal Khichdi for Puppies: https://petspaw.in/homemade-food/veg-puppy-moong-dal-khichdi
+
+Vegetarian Adult Recipes:
+- Veg Adult Bowl: Daily Balanced Plate: https://petspaw.in/homemade-food/veg-adult-balanced-plate
+- Veg Adult Bowl: Quinoa Paneer Veg Mix: https://petspaw.in/homemade-food/veg-adult-quinoa-paneer-veg-mix
+- Veg Adult Bowl: Sweet Potato Lentil Comfort Plate: https://petspaw.in/homemade-food/veg-adult-sweet-potato-lentil-comfort-plate
+- Veg Adult Bowl: Paneer Rice Protein Bowl: https://petspaw.in/homemade-food/veg-adult-paneer-rice-protein-bowl
+- Veg Adult Bowl: Dal Chawal Everyday Meal: https://petspaw.in/homemade-food/veg-adult-dal-chawal-everyday
+
+Vegetarian Senior Recipes:
+- Veg Senior Bowl: Soft Joint-Friendly Meal: https://petspaw.in/homemade-food/veg-senior-soft-joint-friendly-meal
+- Veg Senior Bowl: Pumpkin Oats Recovery Meal: https://petspaw.in/homemade-food/veg-senior-pumpkin-oats-recovery-meal
+
+Non-Vegetarian Puppy Recipes:
+- Non-Veg Puppy Bowl: Chicken Rice Starter: https://petspaw.in/homemade-food/non-veg-puppy-chicken-rice-starter
+- Non-Veg Puppy Bowl: Chicken Pumpkin Soft Mix: https://petspaw.in/homemade-food/non-veg-puppy-chicken-pumpkin-soft-mix
+- Non-Veg Puppy Bowl: Turkey Rice Gentle Starter: https://petspaw.in/homemade-food/non-veg-puppy-turkey-rice-gentle-starter
+- Non-Veg Puppy Bowl: Egg Rice Soft Meal: https://petspaw.in/homemade-food/non-veg-puppy-egg-rice-soft-meal
+- Non-Veg Puppy Bowl: Fish Oats Gentle Meal: https://petspaw.in/homemade-food/non-veg-puppy-fish-oats-gentle
+
+Non-Vegetarian Adult Recipes:
+- Non-Veg Adult Bowl: Lean Protein Plate: https://petspaw.in/homemade-food/non-veg-adult-lean-protein-plate
+- Non-Veg Adult Bowl: Egg Rice Energy Meal: https://petspaw.in/homemade-food/non-veg-adult-egg-rice-energy-meal
+- Non-Veg Adult Bowl: Fish Rice Gentle Digestion Plate: https://petspaw.in/homemade-food/non-veg-adult-fish-rice-gentle-digestion-plate
+- Non-Veg Adult Bowl: Chicken Vegetable Biryani-Style Plate: https://petspaw.in/homemade-food/non-veg-adult-chicken-veg-biryani-style
+- Non-Veg Adult Bowl: Mutton Rice Hearty Meal: https://petspaw.in/homemade-food/non-veg-adult-mutton-rice-hearty
+
+Non-Vegetarian Senior Recipes:
+- Non-Veg Senior Bowl: Soft Turkey & Pumpkin Mix: https://petspaw.in/homemade-food/non-veg-senior-soft-turkey-pumpkin-mix
+- Non-Veg Senior Bowl: Chicken Oats Soft Supper: https://petspaw.in/homemade-food/non-veg-senior-chicken-oats-soft-supper
+
+### Symptom Helper
+An educational symptom checker where users select symptoms to receive rule-based guidance and AI-powered analysis. Not a diagnostic tool — always consult a veterinarian.
+- Symptom helper: https://petspaw.in/symptom-helper
+
+### Adoption Guide
+Educational resource covering adoption benefits, how to identify reputable breeders, red flags to avoid, and responsible buying practices.
+- Adoption guide: https://petspaw.in/adoption
+
+### Pet Products
+Curated premium dog food, grooming supplies, toys, accessories, and health products from trusted brands, delivering across India.
+- Browse products: https://petspaw.in/products
+- Individual products: https://petspaw.in/products/{product-slug}
+
+## For Vendors
+
+Verified vendors can register stores on PetsPaw to list puppies and pet products for sale.
+- Vendor portal: https://petspaw.in/vendor/login
+
+## For Registered Users
+
+Dog parents can create accounts to manage pet profiles, track vaccinations, set care reminders, and generate medical reports.
+- User dashboard: https://petspaw.in/dashboard
+
+## Company & Support
+
+- About us: https://petspaw.in/about
+- FAQ: https://petspaw.in/faq
+- Contact: https://petspaw.in/contact
+- Privacy Policy: https://petspaw.in/privacy
+- Terms of Service: https://petspaw.in/terms
+
+## Contact
+
+- General inquiries: hello@petspaw.in
+- Support: support@petspaw.in
+- Privacy: privacy@petspaw.in
+
+## Technical
+
+- Sitemap: https://petspaw.in/sitemap.xml
+- Robots: https://petspaw.in/robots.txt
+
+## Location
+
+India-focused platform. Content is in English (en-IN).
