@@ -69,11 +69,6 @@ function GoogleAnalyticsInner() {
 }
 
 export function GoogleAnalytics() {
-  // Only render on client side to avoid SSR issues
-  if (typeof window === "undefined") {
-    return null;
-  }
-
   return (
     <Suspense fallback={null}>
       <GoogleAnalyticsInner />

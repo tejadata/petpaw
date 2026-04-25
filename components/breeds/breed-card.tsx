@@ -45,7 +45,7 @@ export function BreedCard({ breed }: BreedCardProps) {
         </CardContent>
         <CardFooter className="px-5 pb-5 pt-0 text-xs text-muted-foreground">
           <span>Lifespan: {breed.lifespanMin}–{breed.lifespanMax} years</span>
-          <span className="ml-auto">~${breed.estimatedMonthlyCost}/mo</span>
+          <span className="ml-auto">~₹{(breed.estimatedMonthlyCost * 83).toLocaleString("en-IN")}/mo</span>
         </CardFooter>
       </Card>
     </Link>

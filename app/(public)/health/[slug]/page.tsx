@@ -8,8 +8,7 @@ import { createMetadata } from "@/lib/metadata";
 import { JsonLd } from "@/components/shared/json-ld";
 import { healthArticleSchema, breadcrumbSchema } from "@/lib/schema";
 import { APP_URL } from "@/lib/constants";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { HealthArticleContent } from "@/components/health/health-article-content";
 import Link from "next/link";
 import { ArrowLeft, Calendar, CheckCircle } from "lucide-react";
 
@@ -107,43 +106,10 @@ export default async function HealthArticlePage({ params }: Props) {
 
         <Separator className="my-8" />
 
-        <article className="rounded-2xl border bg-card p-6 sm:p-8">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            components={{
-              h2: ({ children }) => (
-                <h2 className="mt-10 first:mt-0 border-l-4 border-primary pl-4 text-2xl font-semibold tracking-tight">
-                  {children}
-                </h2>
-              ),
-              h3: ({ children }) => (
-                <h3 className="mt-8 text-xl font-semibold tracking-tight">{children}</h3>
-              ),
-              p: ({ children }) => (
-                <p className="mt-4 text-base leading-8 text-foreground/90 sm:text-[1.05rem]">
-                  {children}
-                </p>
-              ),
-              ul: ({ children }) => (
-                <ul className="mt-4 space-y-2 rounded-xl bg-muted/40 p-4">{children}</ul>
-              ),
-              ol: ({ children }) => (
-                <ol className="mt-4 list-decimal space-y-2 pl-6">{children}</ol>
-              ),
-              li: ({ children }) => <li className="leading-7 marker:text-primary">{children}</li>,
-              strong: ({ children }) => (
-                <strong className="font-semibold text-foreground">{children}</strong>
-              ),
-              em: ({ children }) => (
-                <em className="inline-block mt-6 rounded-lg border-l-4 border-warning bg-warning/10 px-4 py-3 text-sm text-muted-foreground not-italic">
-                  {children}
-                </em>
-              ),
-            }}
-          >
-            {article.content}
-          </ReactMarkdown>
-        </article>
+        <HealthArticleContent
+          slug={article.slug}
+          fallbackContent={article.content || undefined}
+        />
       </div>
     </Container>
   );

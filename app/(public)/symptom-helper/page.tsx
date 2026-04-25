@@ -3,6 +3,8 @@
 import { useState, useRef, type ChangeEvent } from "react";
 import { Container } from "@/components/layout/container";
 import { SectionHeader } from "@/components/layout/section-header";
+import { JsonLd } from "@/components/shared/json-ld";
+import { webApplicationSchema } from "@/lib/schema";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -82,6 +84,7 @@ export default function SymptomHelperPage() {
 
   return (
     <Container className="py-16 sm:py-20">
+      <JsonLd schema={webApplicationSchema()} />
       <SectionHeader
         title="Symptom Helper"
         description="Select the symptoms your dog is experiencing. This tool provides general educational guidance — it is not a diagnostic tool."

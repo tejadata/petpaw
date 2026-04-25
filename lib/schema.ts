@@ -251,6 +251,31 @@ export function productSchema(product: Product): SchemaBase {
   };
 }
 
+// ─── WebApplication (Symptom Helper tool) ────────────────────────────────────
+
+export function webApplicationSchema(): SchemaBase {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "Dog Symptom Checker",
+    description:
+      "Free dog symptom checker for Indian pet owners. Select your dog's symptoms to get educational guidance and know when to visit a vet.",
+    url: `${APP_URL}/symptom-helper`,
+    applicationCategory: "HealthApplication",
+    operatingSystem: "All",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "INR",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: APP_NAME,
+      url: APP_URL,
+    },
+  };
+}
+
 // ─── ItemList ─────────────────────────────────────────────────────────────────
 
 export interface ItemListEntry {

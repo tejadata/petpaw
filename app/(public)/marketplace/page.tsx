@@ -1,10 +1,8 @@
 import { Suspense } from "react";
 import { createMetadata } from "@/lib/metadata";
 import { Container } from "@/components/layout/container";
-import { SectionHeader } from "@/components/layout/section-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import MarketplaceClient from "./marketplace-client";
-import { APP_NAME } from "@/lib/constants";
 
 /**
  * Server component — metadata is embedded in the static HTML at build time.
@@ -38,10 +36,12 @@ function MarketplaceSkeleton() {
 export default function MarketplacePage() {
   return (
     <Container className="py-16 sm:py-20">
-      <SectionHeader
-        title="Marketplace"
-        description={`Browse puppies and pet products from verified vendors on ${APP_NAME}.`}
-      />
+      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        Puppies &amp; Pet Products — India&apos;s Verified Vendor Marketplace
+      </h1>
+      <p className="mt-3 text-lg text-muted-foreground">
+        Browse puppies for sale and pet products from verified vendors across India. Every listing is reviewed for quality and authenticity.
+      </p>
       <Suspense fallback={<MarketplaceSkeleton />}>
         <MarketplaceClient />
       </Suspense>

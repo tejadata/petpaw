@@ -74,3 +74,4 @@ node_modules/
 scripts/seed-users.ts
 scripts/seed-users.ts
 scripts/seed-users.ts
+SERVICE-ACCOUNT-KEY.json

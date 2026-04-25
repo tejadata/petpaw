@@ -37,7 +37,10 @@ export default async function FAQPage() {
           Frequently Asked Questions
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">
-          Everything you need to know about {APP_NAME} and how we can help you.
+          Everything you need to know about {APP_NAME}. Explore our{" "}
+          <a href="/breeds" className="text-primary underline underline-offset-4">breed guides</a>,{" "}
+          <a href="/health" className="text-primary underline underline-offset-4">health articles</a>, and{" "}
+          <a href="/quiz" className="text-primary underline underline-offset-4">breed quiz</a>, or browse the questions below.
         </p>
 
         <div className="mt-12 space-y-10">

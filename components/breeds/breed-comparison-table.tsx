@@ -44,7 +44,7 @@ export function BreedComparisonTable({ breeds }: BreedComparisonTableProps) {
                   {row.key === "lifespan"
                     ? `${breed.lifespanMin}–${breed.lifespanMax} years`
                     : row.key === "estimatedMonthlyCost"
-                      ? `$${breed.estimatedMonthlyCost}/month`
+                      ? `₹${(breed.estimatedMonthlyCost * 83).toLocaleString("en-IN")}/month`
                       : row.key === "sizeCategory"
                         ? breed.sizeCategory
                         : "isTrait" in row && row.isTrait

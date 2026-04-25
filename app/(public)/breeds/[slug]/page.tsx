@@ -10,12 +10,13 @@ import { createMetadata } from "@/lib/metadata";
 import { JsonLd } from "@/components/shared/json-ld";
 import { breedPageSchema, breadcrumbSchema } from "@/lib/schema";
 import { APP_URL } from "@/lib/constants";
+import { formatWeightKg } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import {
   Heart,
   Home,
-  DollarSign,
+  IndianRupee,
   Clock,
   ArrowLeft,
   Scale,
@@ -210,7 +211,7 @@ export default async function BreedDetailPage({ params }: Props) {
                 <div>
                   <p className="text-sm font-medium">Weight</p>
                   <p className="text-sm text-muted-foreground">
-                    {breed.weightMin}–{breed.weightMax} lbs
+                    {formatWeightKg(breed.weightMin)}–{formatWeightKg(breed.weightMax)}
                   </p>
                 </div>
               </div>
@@ -233,11 +234,11 @@ export default async function BreedDetailPage({ params }: Props) {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <DollarSign className="h-5 w-5 text-muted-foreground" />
+                <IndianRupee className="h-5 w-5 text-muted-foreground" />
                 <div>
                   <p className="text-sm font-medium">Est. Monthly Cost</p>
                   <p className="text-sm text-muted-foreground">
-                    ${breed.estimatedMonthlyCost}/month
+                    ₹{(breed.estimatedMonthlyCost * 83).toLocaleString("en-IN")}/month
                   </p>
                 </div>
               </div>

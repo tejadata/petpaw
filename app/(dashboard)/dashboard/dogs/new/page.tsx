@@ -79,8 +79,8 @@ export default function NewDogPage() {
                 <Input id="age" name="age" type="number" min={0} max={30} placeholder="3" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="weight">Weight (lbs)</Label>
-                <Input id="weight" name="weight" type="number" min={0} max={200} placeholder="50" />
+                <Label htmlFor="weight">Weight (kg)</Label>
+                <Input id="weight" name="weight" type="number" min={0} max={200} placeholder="25" />
               </div>
             </div>
 

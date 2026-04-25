@@ -9,7 +9,7 @@ import { JsonLd } from "@/components/shared/json-ld";
 import { createMetadata } from "@/lib/metadata";
 import { productSchema } from "@/lib/schema";
 import Link from "next/link";
-import { ArrowLeft, Check, X, DollarSign } from "lucide-react";
+import { ArrowLeft, Check, X } from "lucide-react";
 import Image from "next/image";
 
 interface Props {
@@ -74,8 +74,8 @@ export default async function ProductDetailPage({ params }: Props) {
             </span>
           </div>
           <div className="mt-3 flex items-center gap-1 text-2xl font-bold text-primary">
-            <DollarSign className="h-6 w-6" />
-            {product.price.toFixed(2)}
+            <span className="text-xl">₹</span>
+            {product.price.toLocaleString("en-IN")}
           </div>
           <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
             {product.summary}

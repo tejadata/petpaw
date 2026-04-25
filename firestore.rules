@@ -90,6 +90,22 @@ service cloud.firestore {
       allow read: if isAdmin(); // Only admins can read
     }
 
+    // ── Public Content Collections (Articles) ─────────────────────
+    match /healthArticles/{articleId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /homemadeFoodArticles/{articleId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /healthCategories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     // ═══════════════════════════════════════════════════════════════
     // ── Vendor Module ─────────────────────────────────────────────
     // ═══════════════════════════════════════════════════════════════

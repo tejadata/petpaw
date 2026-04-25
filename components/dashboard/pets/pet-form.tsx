@@ -95,7 +95,7 @@ export function PetForm({
           {errors.age && <p className="text-xs text-red-600">{errors.age.message}</p>}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="weight">Weight (lbs)</Label>
+          <Label htmlFor="weight">Weight (kg)</Label>
           <Input id="weight" type="number" min={0} max={500} placeholder="50" {...register("weight")} />
           {errors.weight && <p className="text-xs text-red-600">{errors.weight.message}</p>}
         </div>

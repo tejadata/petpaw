@@ -42,7 +42,7 @@ export default async function AdminProductsPage() {
                     <td className="px-4 py-3">
                       <Badge variant="outline">{product.categoryName}</Badge>
                     </td>
-                    <td className="px-4 py-3">${product.price.toFixed(2)}</td>
+                    <td className="px-4 py-3">₹{product.price.toLocaleString("en-IN")}</td>
                     <td className="px-4 py-3">{product.rating}/5</td>
                     <td className="px-4 py-3 text-right">
                       <Button variant="ghost" size="sm">

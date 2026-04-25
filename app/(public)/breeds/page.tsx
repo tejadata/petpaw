@@ -32,10 +32,10 @@ export default async function BreedsPage() {
           }))
         )}
       />
-      <SectionHeader
-        title="Explore Dog Breeds"
-        description="Browse our comprehensive breed database. Use the filters to find breeds that match your lifestyle."
-      />
+      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Dog Breeds in India</h1>
+      <p className="mt-3 text-lg text-muted-foreground">
+        Browse our comprehensive breed database. Use the filters to find breeds that match your lifestyle.
+      </p>
       <BreedsList breeds={breeds} />
     </Container>
   );

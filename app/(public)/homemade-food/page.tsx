@@ -29,10 +29,10 @@ export default async function HomemadeFoodPage() {
 
   return (
     <Container className="py-16 sm:py-20">
-      <SectionHeader
-        title="Homemade Food Articles"
-        description="Just like Health & Care, browse food guidance by diet preference first, then pick your dog's life stage: Puppy, Middle Age, or Senior."
-      />
+      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Homemade Dog Food Recipes &amp; Guides</h1>
+      <p className="mt-3 text-lg text-muted-foreground">
+        Browse food guidance by diet preference, then pick your dog&apos;s life stage: Puppy, Middle Age, or Senior.
+      </p>
 
       <DisclaimerBlock className="mt-8" variant="warning">
         Home-cooked feeding should be discussed with your veterinarian, especially for puppies, seniors, and dogs with medical conditions.

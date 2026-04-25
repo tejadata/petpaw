@@ -88,7 +88,7 @@ export default function PetDetailPage() {
               {pet.species !== "Dog" && <Badge variant="outline">{pet.species}</Badge>}
               {pet.gender && <span>{pet.gender}</span>}
               {pet.age != null && <span>{pet.age} yr{pet.age !== 1 ? "s" : ""}</span>}
-              {pet.weight != null && <span>{pet.weight} lbs</span>}
+              {pet.weight != null && <span>{pet.weight} kg</span>}
             </div>
           </div>
         </div>

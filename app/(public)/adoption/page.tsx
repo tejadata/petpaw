@@ -37,7 +37,7 @@ export default function AdoptionPage() {
           <ul className="mt-4 space-y-2 text-muted-foreground">
             <li className="flex items-start gap-2">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-              Lower cost — adoption fees are typically $50–$300
+              Lower cost — adoption fees are typically ₹2,000–₹25,000 depending on the shelter and city
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
@@ -113,10 +113,10 @@ export default function AdoptionPage() {
           <h2 className="text-2xl font-bold">Resources</h2>
           <div className="mt-4 grid gap-3">
             {[
-              { name: "Petfinder", url: "https://www.petfinder.com", desc: "Search adoptable dogs near you" },
-              { name: "Adopt a Pet", url: "https://www.adoptapet.com", desc: "Nationwide adoption listings" },
-              { name: "AKC Marketplace", url: "https://marketplace.akc.org", desc: "Find responsible AKC breeders" },
-              { name: "The Shelter Pet Project", url: "https://theshelterpetproject.org", desc: "Shelter adoption advocacy" },
+            { name: "CASA India", url: "https://www.casaindia.org", desc: "Companion animal shelters and adoption drives across India" },
+              { name: "World For All", url: "https://www.worldforall.org", desc: "Mumbai-based NGO with adoptable cats and dogs" },
+              { name: "PAWS India", url: "https://pawsindia.org", desc: "Pan-India animal welfare and adoption network" },
+              { name: "Indian Kennel Club", url: "https://www.kennelclubofindia.org", desc: "Find registered breeders following ethical standards in India" },
             ].map((resource) => (
               <a
                 key={resource.name}

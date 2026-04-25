@@ -10,10 +10,17 @@ import { itemListSchema } from "@/lib/schema";
 import { APP_URL } from "@/lib/constants";
 
 export const metadata = createMetadata({
-  title: "Health Resources",
+  title: "Dog Health Guide for Indian Dog Owners",
   description:
-    "Explore our dog health resource center. Find articles on nutrition, training, grooming, and more — reviewed by veterinary professionals.",
+    "Expert dog health articles on nutrition, grooming, vaccines, and disease prevention — written for pet owners in India. Browse by category or life stage.",
   path: "/health",
+  keywords: [
+    "dog health care India",
+    "dog nutrition guide India",
+    "pet health articles India",
+    "dog vaccination schedule India",
+    "dog grooming tips India",
+  ],
 });
 
 export default async function HealthPage() {
@@ -46,10 +53,10 @@ export default async function HealthPage() {
           }))
         )}
       />
-      <SectionHeader
-        title="Health Resource Center"
-        description="Educational content to help you keep your dog happy and healthy. Browse by category or explore featured articles."
-      />
+      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Dog Health Guide for Indian Dog Owners</h1>
+      <p className="mt-3 text-lg text-muted-foreground">
+        Educational content to help you keep your dog happy and healthy. Browse by category or explore featured articles.
+      </p>
 
       <DisclaimerBlock className="mt-8" />
 

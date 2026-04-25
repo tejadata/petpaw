@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { createMetadata } from "@/lib/metadata";
+import { Container } from "@/components/layout/container";
 import ProductsClient from "./products-client";
 
 export const metadata = createMetadata({
@@ -18,8 +19,18 @@ export const metadata = createMetadata({
 
 export default function ProductsPage() {
   return (
-    <Suspense>
-      <ProductsClient />
-    </Suspense>
+    <>
+      <Container className="pt-16 sm:pt-20 pb-0">
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+          Pet Products for Dogs in India
+        </h1>
+        <p className="mt-3 text-lg text-muted-foreground">
+          Shop premium dog food, grooming supplies, accessories, and toys from trusted brands — delivered across India.
+        </p>
+      </Container>
+      <Suspense>
+        <ProductsClient />
+      </Suspense>
+    </>
   );
 }

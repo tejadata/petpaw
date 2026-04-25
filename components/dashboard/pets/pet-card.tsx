@@ -65,7 +65,7 @@ export function PetCard({ pet, onDelete }: PetCardProps) {
           <div className="flex flex-wrap gap-2 pt-1 text-xs text-muted-foreground">
             {pet.age != null && <span>{pet.age} yr{pet.age !== 1 ? "s" : ""}</span>}
             {pet.gender && <span>{pet.gender}</span>}
-            {pet.weight != null && <span>{pet.weight} lbs</span>}
+            {pet.weight != null && <span>{pet.weight} kg</span>}
             {pet.activityLevel && <span>{pet.activityLevel} activity</span>}
           </div>
         </div>

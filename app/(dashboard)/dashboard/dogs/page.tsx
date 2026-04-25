@@ -60,7 +60,7 @@ export default function DogsPage() {
                 <div className="flex gap-4 text-sm text-muted-foreground pt-1">
                   {dog.age != null && <span>{dog.age} yr{dog.age !== 1 ? "s" : ""}</span>}
                   {dog.gender && <span>{dog.gender}</span>}
-                  {dog.weight != null && <span>{dog.weight} lbs</span>}
+                  {dog.weight != null && <span>{dog.weight} kg</span>}
                 </div>
                 {dog.activityLevel && (
                   <p className="text-xs text-muted-foreground">Activity: {dog.activityLevel}</p>
