@@ -14,6 +14,7 @@ import { getOverdueVaccinationDoses, getUpcomingVaccinationDoses } from "@/lib/d
 import type { Pet } from "@/types/pet";
 import type { MedicalReport } from "@/types/medical-report";
 import type { VaccinationDose } from "@/types/vaccination";
+import { APP_NAME } from "@/lib/constants";
 
 export default function DashboardPage() {
   const { user, loading: authLoading } = useAuth();
@@ -50,7 +51,7 @@ export default function DashboardPage() {
     <div>
       <h1 className="text-3xl font-bold">Dashboard</h1>
       <p className="mt-2 text-muted-foreground">
-        Welcome back{user?.displayName ? `, ${user.displayName}` : ""}! Here&apos;s a quick overview of your PawMatch activity.
+        Welcome back{user?.displayName ? `, ${user.displayName}` : ""}! Here&apos;s a quick overview of your {APP_NAME} activity.
       </p>
 
       {overdueCount > 0 && (

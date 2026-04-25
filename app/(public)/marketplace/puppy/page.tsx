@@ -94,7 +94,7 @@ export default function PublicPuppyDetailPage() {
             {puppy.images[activeImg] ? (
               <Image
                 src={puppy.images[activeImg].url}
-                alt={puppy.title}
+                alt={`${puppy.title} puppy photo`}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -120,7 +120,7 @@ export default function PublicPuppyDetailPage() {
                 >
                   <Image
                     src={img.url}
-                    alt={`Photo ${i + 1}`}
+                    alt={`${puppy.title} puppy thumbnail ${i + 1}`}
                     fill
                     className="object-cover"
                     sizes="80px"

@@ -8,9 +8,11 @@
 import type { MetadataRoute } from "next";
 import { APP_URL } from "@/lib/constants";
 import { breeds as staticBreeds } from "@/lib/datasets/breeds";
-export const dynamic = "force-static";
+import { products as staticProducts } from "@/lib/datasets/products";
 import { healthArticles as staticHealthArticles } from "@/lib/datasets/health-articles";
 import { homemadeFoodArticles as staticFoodArticles } from "@/lib/datasets/homemade-food-articles";
+import { healthCategories as staticHealthCategories } from "@/lib/datasets/health-categories";
+export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = APP_URL;
@@ -47,6 +49,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  const healthCategoryRoutes: MetadataRoute.Sitemap = staticHealthCategories.map((category) => ({
+    url: `${base}/health/category/${category.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.6,
+  }));
+
   const foodRoutes: MetadataRoute.Sitemap = staticFoodArticles.map((a) => ({
     url: `${base}/homemade-food/${a.slug}`,
     lastModified: a.publishedAt,
@@ -54,5 +63,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...breedRoutes, ...healthRoutes, ...foodRoutes];
+  const productRoutes: MetadataRoute.Sitemap = staticProducts.map((product) => ({
+    url: `${base}/products/${product.slug}`,
+    lastModified: product.updatedAt,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [
+    ...staticRoutes,
+    ...breedRoutes,
+    ...healthCategoryRoutes,
+    ...healthRoutes,
+    ...foodRoutes,
+    ...productRoutes,
+  ];
 }

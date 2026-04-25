@@ -40,7 +40,7 @@ export function Navbar() {
               className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-xs font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
             >
               <Store className="h-3.5 w-3.5" />
-              Sell on PawMatch
+              Sell on {APP_NAME}
             </Link>
             <Button variant="ghost" size="sm" asChild>
               <Link href="/login">Sign In</Link>
@@ -80,7 +80,7 @@ export function Navbar() {
                 onClick={() => setMobileOpen(false)}
               >
                 <Store className="h-4 w-4" />
-                Sell on PawMatch
+                Sell on {APP_NAME}
               </Link>
               <div className="flex gap-2 mt-4 px-2">
                 <Button variant="outline" size="sm" asChild className="flex-1">

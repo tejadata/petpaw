@@ -83,7 +83,7 @@ export default function PublicProductDetailPage() {
             {product.images[activeImg] ? (
               <Image
                 src={product.images[activeImg].url}
-                alt={product.title}
+                alt={`${product.title} product photo`}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -109,7 +109,7 @@ export default function PublicProductDetailPage() {
                 >
                   <Image
                     src={img.url}
-                    alt={`Photo ${i + 1}`}
+                    alt={`${product.title} product thumbnail ${i + 1}`}
                     fill
                     className="object-cover"
                     sizes="80px"

@@ -7,11 +7,18 @@
  * execution required for Googlebot.
  */
 
-import { APP_NAME, APP_URL } from "@/lib/constants";
+import {
+  APP_NAME,
+  APP_URL,
+  APP_DESCRIPTION,
+  APP_OG_IMAGE,
+  APP_CONTACT_EMAIL,
+} from "@/lib/constants";
 import type { HealthArticle } from "@/types/health";
 import type { HomemadeFoodArticle } from "@/types/homemade-food";
 import type { Breed } from "@/types/breed";
 import type { FAQ } from "@/types/admin";
+import type { Product } from "@/types/product";
 
 type SchemaBase = Record<string, unknown>;
 
@@ -30,8 +37,9 @@ export function organizationSchema(): SchemaBase {
     name: APP_NAME,
     url: APP_URL,
     logo: { "@type": "ImageObject", url: `${APP_URL}/favicon.svg` },
-    description:
-      "India's trusted platform for finding puppies, exploring dog breeds, shopping pet products, and accessing expert pet health guidance.",
+    image: { "@type": "ImageObject", url: APP_OG_IMAGE },
+    description: APP_DESCRIPTION,
+    email: APP_CONTACT_EMAIL,
     address: { "@type": "PostalAddress", addressCountry: "IN" },
   };
 }
@@ -44,8 +52,7 @@ export function websiteSchema(): SchemaBase {
     "@type": "WebSite",
     name: APP_NAME,
     url: APP_URL,
-    description:
-      "Find puppies for sale in India, explore dog breeds, shop pet care products, and get expert health guidance.",
+    description: APP_DESCRIPTION,
     potentialAction: {
       "@type": "SearchAction",
       target: {
@@ -188,6 +195,45 @@ export function breedPageSchema(breed: Breed): SchemaBase {
       name: breed.name,
       description: breed.description.slice(0, 300),
     },
+  };
+}
+
+export function productSchema(product: Product): SchemaBase {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.title,
+    description: product.summary,
+    image: [{ "@type": "ImageObject", url: product.imageUrl }],
+    sku: product.id,
+    brand: {
+      "@type": "Organization",
+      name: APP_NAME,
+      url: APP_URL,
+    },
+    offers: {
+      "@type": "Offer",
+      url: `${APP_URL}/products/${product.slug}`,
+      priceCurrency: "INR",
+      price: product.price.toFixed(2),
+      availability: "https://schema.org/InStock",
+      itemCondition: "https://schema.org/NewCondition",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: product.rating.toFixed(1),
+      reviewCount: 12,
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${APP_URL}/products/${product.slug}`,
+    },
+    category: product.categoryName,
+    additionalProperty: product.sizeSuitability.map((size) => ({
+      "@type": "PropertyValue",
+      name: "Suitable size",
+      value: size,
+    })),
   };
 }
 

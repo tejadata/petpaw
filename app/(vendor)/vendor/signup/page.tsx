@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
+import { APP_NAME } from "@/lib/constants";
 
 const BENEFITS = [
   "Create your store profile in minutes",
@@ -68,7 +69,7 @@ export default function VendorSignupPage() {
       <div className="hidden md:block space-y-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
-            Start selling on <span className="text-primary">PawMatch</span>
+            Start selling on <span className="text-primary">{APP_NAME}</span>
           </h1>
           <p className="mt-2 text-muted-foreground leading-relaxed">
             Create your free vendor account and get your store in front of thousands of pet lovers.

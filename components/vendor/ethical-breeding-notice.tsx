@@ -1,4 +1,5 @@
 import { ShieldCheck } from "lucide-react";
+import { APP_NAME } from "@/lib/constants";
 
 export function EthicalBreedingNotice() {
   return (
@@ -15,7 +16,7 @@ export function EthicalBreedingNotice() {
             <li>Ensure safe and humane living conditions for all animals.</li>
           </ul>
           <p className="mt-2 text-xs text-blue-100 font-medium">
-            PawMatch reserves the right to remove listings that do not comply with ethical breeding standards.
+            {APP_NAME} reserves the right to remove listings that do not comply with ethical breeding standards.
           </p>
         </div>
       </div>

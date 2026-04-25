@@ -9,6 +9,43 @@
   "hosting": {
     "public": "out",
     "cleanUrls": true,
+    "redirects": [
+      {
+        "source": "/pet-care",
+        "destination": "/health",
+        "type": 301
+      },
+      {
+        "source": "/product/**",
+        "destination": "/products",
+        "type": 301
+      },
+      {
+        "source": "/products/category/**",
+        "destination": "/products",
+        "type": 301
+      },
+      {
+        "source": "/category/**",
+        "destination": "/products",
+        "type": 301
+      },
+      {
+        "source": "/categories/**",
+        "destination": "/products",
+        "type": 301
+      },
+      {
+        "source": "/shop/**",
+        "destination": "/products",
+        "type": 301
+      },
+      {
+        "source": "/marketplace/category/**",
+        "destination": "/marketplace",
+        "type": 301
+      }
+    ],
     "ignore": [
       "firebase.json",
       "**/.*",

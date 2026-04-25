@@ -18,6 +18,7 @@ import {
   Syringe,
 } from "lucide-react";
 import { signOutAndRedirect } from "@/lib/auth-actions";
+import { APP_NAME } from "@/lib/constants";
 
 const navItems = [
   { href: "/dashboard", icon: LayoutDashboard, label: "Overview" },
@@ -73,7 +74,7 @@ export function DashboardSidebar() {
         <div className="flex h-16 items-center gap-2 border-b px-6">
           <PawPrint className="h-6 w-6 text-primary" />
           <Link href="/" className="text-lg font-bold">
-            PawMatch
+            {APP_NAME}
           </Link>
         </div>
 
@@ -97,7 +98,7 @@ export function DashboardSidebar() {
         <div className="flex items-center gap-2">
           <PawPrint className="h-5 w-5 text-primary" />
           <Link href="/" className="text-base font-bold">
-            PawMatch
+            {APP_NAME}
           </Link>
         </div>
         <button
@@ -127,7 +128,7 @@ export function DashboardSidebar() {
         <div className="flex h-14 items-center justify-between border-b px-4">
           <div className="flex items-center gap-2">
             <PawPrint className="h-5 w-5 text-primary" />
-            <span className="text-base font-bold">PawMatch</span>
+            <span className="text-base font-bold">{APP_NAME}</span>
           </div>
           <button
             onClick={() => setMobileOpen(false)}

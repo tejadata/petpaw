@@ -93,7 +93,7 @@ export default async function BreedDetailPage({ params }: Props) {
         <div className="mt-6 relative w-full h-[300px] sm:h-[400px] overflow-hidden rounded-2xl">
           <Image
             src={breed.imageUrl}
-            alt={breed.name}
+            alt={`${breed.name} dog breed profile`}
             fill
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 1024px"

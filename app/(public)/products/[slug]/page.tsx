@@ -5,9 +5,12 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { RatingStars } from "@/components/shared/rating-stars";
+import { JsonLd } from "@/components/shared/json-ld";
 import { createMetadata } from "@/lib/metadata";
+import { productSchema } from "@/lib/schema";
 import Link from "next/link";
 import { ArrowLeft, Check, X, DollarSign } from "lucide-react";
+import Image from "next/image";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -36,6 +39,7 @@ export default async function ProductDetailPage({ params }: Props) {
 
   return (
     <Container className="py-16 sm:py-20">
+      <JsonLd schema={productSchema(product)} />
       <div className="mx-auto max-w-3xl">
         <Link
           href="/products"
@@ -50,10 +54,24 @@ export default async function ProductDetailPage({ params }: Props) {
             <Badge variant="secondary">{product.categoryName}</Badge>
             <Badge variant="outline">{product.ageSuitability}</Badge>
           </div>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight">{product.title}</h1>
+          <div className="mt-4 overflow-hidden rounded-2xl border bg-muted">
+            <Image
+              src={product.imageUrl}
+              alt={`${product.title} product image`}
+              width={1200}
+              height={675}
+              className="h-auto w-full object-cover"
+              priority
+            />
+          </div>
+          <h1 className="mt-3 text-4xl font-bold tracking-tight">
+            {product.title}
+          </h1>
           <div className="mt-3 flex items-center gap-3">
             <RatingStars rating={product.rating} />
-            <span className="text-sm text-muted-foreground">{product.rating}/5</span>
+            <span className="text-sm text-muted-foreground">
+              {product.rating}/5
+            </span>
           </div>
           <div className="mt-3 flex items-center gap-1 text-2xl font-bold text-primary">
             <DollarSign className="h-6 w-6" />
@@ -69,7 +87,9 @@ export default async function ProductDetailPage({ params }: Props) {
         <div className="grid gap-6 sm:grid-cols-2">
           <Card>
             <CardHeader>
-              <h2 className="text-lg font-bold text-green-700 dark:text-green-400">Pros</h2>
+              <h2 className="text-lg font-bold text-green-700 dark:text-green-400">
+                Pros
+              </h2>
             </CardHeader>
             <CardContent>
               <ul className="space-y-2">
@@ -84,7 +104,9 @@ export default async function ProductDetailPage({ params }: Props) {
           </Card>
           <Card>
             <CardHeader>
-              <h2 className="text-lg font-bold text-red-700 dark:text-red-400">Cons</h2>
+              <h2 className="text-lg font-bold text-red-700 dark:text-red-400">
+                Cons
+              </h2>
             </CardHeader>
             <CardContent>
               <ul className="space-y-2">
@@ -128,8 +150,8 @@ export default async function ProductDetailPage({ params }: Props) {
         </section>
 
         <p className="mt-12 text-sm text-muted-foreground">
-          Product recommendations may include affiliate links. This does not affect our editorial
-          selections.
+          Product recommendations may include affiliate links. This does not
+          affect our editorial selections.
         </p>
       </div>
     </Container>

@@ -9,11 +9,12 @@ import { getFAQs } from "@/lib/data/faqs";
 import { createMetadata } from "@/lib/metadata";
 import { JsonLd } from "@/components/shared/json-ld";
 import { faqPageSchema } from "@/lib/schema";
+import { APP_NAME } from "@/lib/constants";
 
 export const metadata = createMetadata({
   title: "Frequently Asked Questions",
   description:
-    "Find answers to common questions about PawMatch, our breed quiz, health resources, and more.",
+    `Find answers to common questions about ${APP_NAME}, our breed quiz, health resources, and more.`,
   path: "/faq",
 });
 
@@ -36,7 +37,7 @@ export default async function FAQPage() {
           Frequently Asked Questions
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">
-          Everything you need to know about PawMatch and how we can help you.
+          Everything you need to know about {APP_NAME} and how we can help you.
         </p>
 
         <div className="mt-12 space-y-10">

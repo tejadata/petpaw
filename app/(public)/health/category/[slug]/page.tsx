@@ -9,8 +9,11 @@ import { HealthArticleCard } from "@/components/health/health-article-card";
 import { DisclaimerBlock } from "@/components/shared/disclaimer-block";
 import { EmptyState } from "@/components/shared/empty-state";
 import { createMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/shared/json-ld";
+import { breadcrumbSchema } from "@/lib/schema";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { APP_URL } from "@/lib/constants";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -41,6 +44,16 @@ export default async function HealthCategoryPage({ params }: Props) {
 
   return (
     <Container className="py-16 sm:py-20">
+      <JsonLd
+        schema={breadcrumbSchema([
+          { name: "Home", url: APP_URL },
+          { name: "Health Resources", url: `${APP_URL}/health` },
+          {
+            name: category.name,
+            url: `${APP_URL}/health/category/${category.slug}`,
+          },
+        ])}
+      />
       <Link
         href="/health"
         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"

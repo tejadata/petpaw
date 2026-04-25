@@ -4,6 +4,7 @@ import { Container } from "@/components/layout/container";
 import { SectionHeader } from "@/components/layout/section-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import MarketplaceClient from "./marketplace-client";
+import { APP_NAME } from "@/lib/constants";
 
 /**
  * Server component — metadata is embedded in the static HTML at build time.
@@ -39,7 +40,7 @@ export default function MarketplacePage() {
     <Container className="py-16 sm:py-20">
       <SectionHeader
         title="Marketplace"
-        description="Browse puppies and pet products from verified vendors on PawMatch."
+        description={`Browse puppies and pet products from verified vendors on ${APP_NAME}.`}
       />
       <Suspense fallback={<MarketplaceSkeleton />}>
         <MarketplaceClient />

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { createUserProfile } from "@/lib/data/users";
-import { ADMIN_EMAILS } from "@/lib/constants";
+import { ADMIN_EMAILS, APP_NAME } from "@/lib/constants";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -75,7 +75,7 @@ export default function RegisterPage() {
       <CardHeader className="text-center">
         <h1 className="text-2xl font-bold">Create Account</h1>
         <p className="text-sm text-muted-foreground">
-          Join PawMatch to save quiz results, manage dog profiles, and more.
+          Join {APP_NAME} to save quiz results, manage dog profiles, and more.
         </p>
       </CardHeader>
       <CardContent>

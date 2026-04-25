@@ -11,7 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getFeaturedBreeds } from "@/lib/data/breeds";
 import { getFeaturedArticles } from "@/lib/data/health";
 import { Search, Heart, PawPrint } from "lucide-react";
-import { APP_NAME, APP_URL } from "@/lib/constants";
+import { APP_NAME, APP_URL, APP_OG_IMAGE } from "@/lib/constants";
 
 // Static metadata — embedded in the homepage HTML at build time.
 export const metadata: Metadata = {
@@ -36,14 +36,22 @@ export const metadata: Metadata = {
       "Find puppies for sale in India, explore dog breeds, shop pet products, and get expert dog health guidance.",
     url: APP_URL,
     siteName: APP_NAME,
-    images: [{ url: `${APP_URL}/og-image.png`, width: 1200, height: 630, alt: APP_NAME }],
+    images: [
+      {
+        url: APP_OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: APP_NAME,
+      },
+    ],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: `${APP_NAME} — Find Puppies, Dog Breeds & Pet Products in India`,
-    description: "Find puppies for sale in India, explore dog breeds, shop pet products.",
-    images: [`${APP_URL}/og-image.png`],
+    description:
+      "Find puppies for sale in India, explore dog breeds, shop pet products.",
+    images: [APP_OG_IMAGE],
   },
   alternates: { canonical: APP_URL },
 };
@@ -96,20 +104,40 @@ export default async function HomePage() {
         primaryAction={{ label: "Take the Breed Quiz", href: "/quiz" }}
         secondaryAction={{ label: "Browse Breeds", href: "/breeds" }}
         imageCollage={HERO_COLLAGE}
+        imageAlts={[
+          "Happy cream puppy smiling at the camera",
+          "Golden retriever portrait outdoors",
+          "Playful corgi enjoying a walk",
+        ]}
       />
 
       {/* How it Works */}
       <section className="py-16 sm:py-20">
         <Container>
           <SectionHeader
-            title="How PawMatch Works"
+            title={`How ${APP_NAME} Works`}
             description="Three simple steps to finding your ideal dog companion"
           />
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
             {[
-              { icon: Search, title: "Take the Quiz", description: "Answer questions about your lifestyle, preferences, and living situation" },
-              { icon: PawPrint, title: "Get Matched", description: "Our engine scores breeds against your answers and explains why each is a good fit" },
-              { icon: Heart, title: "Meet Your Match", description: "Learn about your top breeds, find ethical breeders, or adopt from a rescue" },
+              {
+                icon: Search,
+                title: "Take the Quiz",
+                description:
+                  "Answer questions about your lifestyle, preferences, and living situation",
+              },
+              {
+                icon: PawPrint,
+                title: "Get Matched",
+                description:
+                  "Our engine scores breeds against your answers and explains why each is a good fit",
+              },
+              {
+                icon: Heart,
+                title: "Meet Your Match",
+                description:
+                  "Learn about your top breeds, find ethical breeders, or adopt from a rescue",
+              },
             ].map((step, i) => (
               <Card key={i} className="text-center border-0 shadow-none">
                 <CardContent className="pt-6">
@@ -117,7 +145,9 @@ export default async function HomePage() {
                     <step.icon className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="font-semibold text-lg">{step.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{step.description}</p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {step.description}
+                  </p>
                 </CardContent>
               </Card>
             ))}
@@ -137,6 +167,32 @@ export default async function HomePage() {
             <Button variant="outline" asChild>
               <Link href="/breeds">View All Breeds</Link>
             </Button>
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-12 sm:py-16">
+        <Container>
+          <div className="rounded-2xl border bg-card p-6 sm:p-8">
+            <h2 className="text-2xl font-bold tracking-tight">
+              Explore Puppies, Products, and Practical Pet Care
+            </h2>
+            <p className="mt-3 max-w-2xl text-muted-foreground">
+              Start with our breed guides, browse trusted marketplace listings,
+              or read practical health and care content written for dog parents
+              in India.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button asChild variant="outline">
+                <Link href="/marketplace">Browse Marketplace</Link>
+              </Button>
+              <Button asChild variant="outline">
+                <Link href="/products">Explore Products</Link>
+              </Button>
+              <Button asChild variant="outline">
+                <Link href="/health">Read Health Guides</Link>
+              </Button>
+            </div>
           </div>
         </Container>
       </section>
@@ -161,7 +217,11 @@ export default async function HomePage() {
                   alt={img.alt}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes={i === 0 ? "(max-width: 768px) 50vw, 33vw" : "(max-width: 768px) 50vw, 33vw"}
+                  sizes={
+                    i === 0
+                      ? "(max-width: 768px) 50vw, 33vw"
+                      : "(max-width: 768px) 50vw, 33vw"
+                  }
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               </div>
@@ -194,7 +254,7 @@ export default async function HomePage() {
       <section className="relative overflow-hidden py-20 sm:py-28">
         <Image
           src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=1920&q=80&auto=format&fit=crop"
-          alt=""
+          alt="Happy dog enjoying outdoor playtime"
           fill
           className="object-cover"
           sizes="100vw"
@@ -205,8 +265,8 @@ export default async function HomePage() {
             Not Sure Which Breed Is Right For You?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg text-white/85">
-            Our quick quiz matches you with breeds that fit your lifestyle, experience, and
-            preferences.
+            Our quick quiz matches you with breeds that fit your lifestyle,
+            experience, and preferences.
           </p>
           <Button
             asChild

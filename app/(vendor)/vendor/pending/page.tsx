@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { APPROVAL_STATUS_LABELS } from "@/types/vendor";
 import type { Vendor } from "@/types/vendor";
+import { APP_SUPPORT_EMAIL } from "@/lib/constants";
 
 export default function VendorPendingPage() {
   const { user, vendor: currentVendor, refreshVendor } = useVendorAuthGuard();
@@ -249,10 +250,10 @@ export default function VendorPendingPage() {
             <p>
               Need help? Contact our support team at{" "}
               <a
-                href="mailto:support@pawmatch.com"
+                href={`mailto:${APP_SUPPORT_EMAIL}`}
                 className="text-primary hover:underline"
               >
-                support@pawmatch.com
+                {APP_SUPPORT_EMAIL}
               </a>
             </p>
           </div>

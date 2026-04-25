@@ -1,5 +1,6 @@
 import { PawPrint, Store } from "lucide-react";
 import Link from "next/link";
+import { APP_NAME } from "@/lib/constants";
 
 export default function VendorLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,7 +13,7 @@ export default function VendorLayout({ children }: { children: React.ReactNode }
 
       <Link href="/" className="mb-6 sm:mb-8 flex items-center gap-2.5 group">
         <PawPrint className="h-8 w-8 text-primary transition-transform group-hover:scale-110" />
-        <span className="text-2xl font-bold tracking-tight">PawMatch</span>
+        <span className="text-2xl font-bold tracking-tight">{APP_NAME}</span>
         <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary ring-1 ring-primary/20">
           <Store className="h-3 w-3" />
           Vendor

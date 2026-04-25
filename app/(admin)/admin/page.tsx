@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import { getAllUsers } from "@/lib/data/users";
 import { PendingVendorsWidget } from "@/components/admin/pending-vendors";
+import { APP_NAME } from "@/lib/constants";
 
 export default function AdminDashboardPage() {
   const [userCount, setUserCount] = useState<number | null>(null);
@@ -75,7 +76,7 @@ export default function AdminDashboardPage() {
     <div>
       <h1 className="text-3xl font-bold">Admin Dashboard</h1>
       <p className="mt-2 text-muted-foreground">
-        Manage PawMatch content and users.
+        Manage {APP_NAME} content and users.
       </p>
 
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

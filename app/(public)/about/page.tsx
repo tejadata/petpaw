@@ -1,11 +1,12 @@
 import { Container } from "@/components/layout/container";
 import { Card, CardContent } from "@/components/ui/card";
 import { createMetadata } from "@/lib/metadata";
+import { APP_NAME } from "@/lib/constants";
 import { PawPrint, Heart, Users, BookOpen } from "lucide-react";
 
 export const metadata = createMetadata({
   title: "About",
-  description: "Learn about PawMatch and our mission to help people find the right dog companion.",
+  description: `Learn about ${APP_NAME} and our mission to help people find the right dog companion.`,
   path: "/about",
 });
 
@@ -13,9 +14,9 @@ export default function AboutPage() {
   return (
     <Container className="py-16 sm:py-20">
       <div className="mx-auto max-w-3xl">
-        <h1 className="text-4xl font-bold tracking-tight">About PawMatch</h1>
+        <h1 className="text-4xl font-bold tracking-tight">About {APP_NAME}</h1>
         <p className="mt-4 text-lg text-muted-foreground">
-          PawMatch was created with a simple belief: every person deserves the right dog, and every
+          {APP_NAME} was created with a simple belief: every person deserves the right dog, and every
           dog deserves the right home.
         </p>
 
@@ -59,7 +60,7 @@ export default function AboutPage() {
           <section>
             <h2 className="text-2xl font-bold">Our Commitment to Safety</h2>
             <p className="mt-3 text-muted-foreground leading-relaxed">
-              All health-related content on PawMatch is for educational purposes only. We clearly
+              All health-related content on {APP_NAME} is for educational purposes only. We clearly
               mark vet-reviewed content and always encourage users to consult with a licensed
               veterinarian for any health concerns. Our symptom helper is a learning tool — never a
               diagnostic tool.

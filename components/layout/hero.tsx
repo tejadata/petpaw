@@ -10,10 +10,24 @@ interface HeroProps {
   secondaryAction?: { label: string; href: string };
   backgroundImage?: string;
   imageCollage?: string[];
+  imageAlts?: string[];
 }
 
-export function Hero({ title, description, primaryAction, secondaryAction, backgroundImage, imageCollage }: HeroProps) {
+export function Hero({
+  title,
+  description,
+  primaryAction,
+  secondaryAction,
+  backgroundImage,
+  imageCollage,
+  imageAlts,
+}: HeroProps) {
   const hasCollage = imageCollage && imageCollage.length >= 3;
+  const collageAlts = imageAlts ?? [
+    "Happy family dog portrait",
+    "Dog portrait close-up",
+    "Dog playing outdoors",
+  ];
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-amber-50 dark:from-background dark:to-background">
@@ -51,7 +65,7 @@ export function Hero({ title, description, primaryAction, secondaryAction, backg
                 <div className="col-span-2 overflow-hidden rounded-2xl shadow-xl">
                   <Image
                     src={imageCollage[0]}
-                    alt="Happy dog"
+                    alt={collageAlts[0] ?? "Happy dog"}
                     width={640}
                     height={380}
                     className="h-[220px] sm:h-[280px] lg:h-[320px] w-full object-cover"
@@ -62,7 +76,7 @@ export function Hero({ title, description, primaryAction, secondaryAction, backg
                 <div className="overflow-hidden rounded-2xl shadow-lg">
                   <Image
                     src={imageCollage[1]}
-                    alt="Dog portrait"
+                    alt={collageAlts[1] ?? "Dog portrait"}
                     width={320}
                     height={240}
                     className="h-[140px] sm:h-[180px] lg:h-[200px] w-full object-cover"
@@ -72,7 +86,7 @@ export function Hero({ title, description, primaryAction, secondaryAction, backg
                 <div className="overflow-hidden rounded-2xl shadow-lg">
                   <Image
                     src={imageCollage[2]}
-                    alt="Dog playing"
+                    alt={collageAlts[2] ?? "Dog playing"}
                     width={320}
                     height={240}
                     className="h-[140px] sm:h-[180px] lg:h-[200px] w-full object-cover"

@@ -5,6 +5,9 @@ import { HealthCategoryCard } from "@/components/health/health-category-card";
 import { HealthArticleCard } from "@/components/health/health-article-card";
 import { DisclaimerBlock } from "@/components/shared/disclaimer-block";
 import { createMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/shared/json-ld";
+import { itemListSchema } from "@/lib/schema";
+import { APP_URL } from "@/lib/constants";
 
 export const metadata = createMetadata({
   title: "Health Resources",
@@ -30,6 +33,19 @@ export default async function HealthPage() {
 
   return (
     <Container className="py-16 sm:py-20">
+      <JsonLd
+        schema={itemListSchema(
+          "Dog Health Articles",
+          "Dog health, wellness, and preventive care articles for pet parents in India.",
+          allArticles.slice(0, 20).map((article, index) => ({
+            position: index + 1,
+            name: article.title,
+            url: `${APP_URL}/health/${article.slug}`,
+            description: article.excerpt,
+            image: article.imageUrl || undefined,
+          }))
+        )}
+      />
       <SectionHeader
         title="Health Resource Center"
         description="Educational content to help you keep your dog happy and healthy. Browse by category or explore featured articles."

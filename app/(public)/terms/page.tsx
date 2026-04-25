@@ -1,9 +1,10 @@
 import { Container } from "@/components/layout/container";
 import { createMetadata } from "@/lib/metadata";
+import { APP_NAME } from "@/lib/constants";
 
 export const metadata = createMetadata({
   title: "Terms of Service",
-  description: "Read our terms of service for using PawMatch.",
+  description: `Read our terms of service for using ${APP_NAME}.`,
   path: "/terms",
 });
 
@@ -16,20 +17,20 @@ export default function TermsPage() {
 
         <h2>1. Acceptance of Terms</h2>
         <p>
-          By accessing or using PawMatch, you agree to be bound by these terms. If you do not agree,
+          By accessing or using {APP_NAME}, you agree to be bound by these terms. If you do not agree,
           please do not use the service.
         </p>
 
         <h2>2. Service Description</h2>
         <p>
-          PawMatch provides breed recommendation tools, pet health education content, product
+          {APP_NAME} provides breed recommendation tools, pet health education content, product
           reviews, and pet management features. Our services are intended for educational and
           informational purposes.
         </p>
 
         <h2>3. Medical Disclaimer</h2>
         <p>
-          <strong>PawMatch is not a substitute for professional veterinary advice.</strong> All
+          <strong>{APP_NAME} is not a substitute for professional veterinary advice.</strong> All
           health-related content, including our symptom helper, is for educational purposes only. You
           should always consult a licensed veterinarian for medical decisions regarding your pet.
         </p>
@@ -57,13 +58,13 @@ export default function TermsPage() {
 
         <h2>7. Intellectual Property</h2>
         <p>
-          All content on PawMatch, including text, graphics, and software, is owned by PawMatch or
+          All content on {APP_NAME}, including text, graphics, and software, is owned by {APP_NAME} or
           its licensors and is protected by copyright and other intellectual property laws.
         </p>
 
         <h2>8. Limitation of Liability</h2>
         <p>
-          PawMatch is provided &quot;as is&quot; without warranties of any kind. We are not liable
+          {APP_NAME} is provided &quot;as is&quot; without warranties of any kind. We are not liable
           for any damages arising from your use of the service, including decisions made based on our
           breed recommendations or health content.
         </p>

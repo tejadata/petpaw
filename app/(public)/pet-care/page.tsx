@@ -15,6 +15,8 @@ export const metadata = createMetadata({
   description:
     "Your complete dog care guide: health articles, nutrition tips, and homemade food recipes for every life stage.",
   path: "/pet-care",
+  canonical: "/health",
+  noIndex: true,
 });
 
 const ageOrder = ["Puppy", "Middle Age", "Senior"] as const;

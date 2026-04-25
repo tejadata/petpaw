@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Loader2 } from "lucide-react";
+import { APP_NAME } from "@/lib/constants";
 
 const contactSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -144,7 +145,7 @@ export function PriceUnlockModal({
               disabled={submitting || loading}
             />
             <Label htmlFor="allowCalls" className="text-sm">
-              I agree to receive calls from PawMatch for product inquiries
+              I agree to receive calls from {APP_NAME} for product inquiries
             </Label>
           </div>
 

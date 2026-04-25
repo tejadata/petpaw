@@ -18,6 +18,7 @@ import {
 import { ApprovalStatusBadge } from "@/components/vendor/approval-status-badge";
 import type { VendorApprovalStatus } from "@/types/vendor";
 import { signOutAndRedirect } from "@/lib/auth-actions";
+import { APP_NAME } from "@/lib/constants";
 
 const navItems = [
   { href: "/vendor/dashboard", icon: LayoutDashboard, label: "Overview" },
@@ -80,7 +81,7 @@ export function VendorSidebar({ approvalStatus }: VendorSidebarProps) {
         <div className="flex h-16 items-center gap-2 border-b px-6">
           <PawPrint className="h-6 w-6 text-primary" />
           <Link href="/" className="text-lg font-bold">
-            PawMatch
+            {APP_NAME}
           </Link>
           <span className="rounded-md bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">
             Vendor
@@ -121,7 +122,7 @@ export function VendorSidebar({ approvalStatus }: VendorSidebarProps) {
         <div className="flex items-center gap-2">
           <PawPrint className="h-5 w-5 text-primary" />
           <Link href="/" className="text-base font-bold">
-            PawMatch
+            {APP_NAME}
           </Link>
           <span className="rounded-md bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">
             Vendor
@@ -154,7 +155,7 @@ export function VendorSidebar({ approvalStatus }: VendorSidebarProps) {
         <div className="flex h-14 items-center justify-between border-b px-4">
           <div className="flex items-center gap-2">
             <PawPrint className="h-5 w-5 text-primary" />
-            <span className="text-base font-bold">PawMatch</span>
+            <span className="text-base font-bold">{APP_NAME}</span>
           </div>
           <button
             onClick={() => setMobileOpen(false)}

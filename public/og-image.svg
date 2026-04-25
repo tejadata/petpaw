@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF7ED"/>
+      <stop offset="0.55" stop-color="#FFF1F2"/>
+      <stop offset="1" stop-color="#FEF3C7"/>
+    </linearGradient>
+    <linearGradient id="card" x1="764" y1="104" x2="1088" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F97316"/>
+      <stop offset="1" stop-color="#EA580C"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="135" cy="92" r="72" fill="#FDBA74" fill-opacity="0.22"/>
+  <circle cx="1040" cy="520" r="128" fill="#FED7AA" fill-opacity="0.35"/>
+  <circle cx="948" cy="132" r="44" fill="#FB923C" fill-opacity="0.14"/>
+  <rect x="712" y="88" width="372" height="424" rx="34" fill="white" fill-opacity="0.86"/>
+  <rect x="748" y="124" width="300" height="352" rx="28" fill="url(#card)"/>
+  <circle cx="898" cy="274" r="86" fill="white" fill-opacity="0.18"/>
+  <ellipse cx="898" cy="316" rx="82" ry="62" fill="white"/>
+  <ellipse cx="808" cy="236" rx="34" ry="42" fill="white"/>
+  <ellipse cx="988" cy="236" rx="34" ry="42" fill="white"/>
+  <ellipse cx="856" cy="200" rx="30" ry="38" fill="white"/>
+  <ellipse cx="940" cy="200" rx="30" ry="38" fill="white"/>
+  <text x="86" y="186" fill="#111827" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="700">
+    PetsPaw
+  </text>
+  <text x="86" y="252" fill="#374151" font-family="Arial, Helvetica, sans-serif" font-size="30">
+    Dog breeds, pet care, puppies, and products in India
+  </text>
+  <text x="86" y="350" fill="#111827" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="700">
+    Trusted guides for dog parents.
+  </text>
+  <text x="86" y="404" fill="#4B5563" font-family="Arial, Helvetica, sans-serif" font-size="28">
+    Explore breed profiles, health articles, curated products,
+  </text>
+  <text x="86" y="442" fill="#4B5563" font-family="Arial, Helvetica, sans-serif" font-size="28">
+    and verified puppy listings on one clean platform.
+  </text>
+  <text x="86" y="536" fill="#C2410C" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">
+    petspaw.in
+  </text>
+</svg>

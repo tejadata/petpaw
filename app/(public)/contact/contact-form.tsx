@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { APP_CONTACT_EMAIL } from "@/lib/constants";
 import { Mail, MapPin, Clock } from "lucide-react";
 import { useState } from "react";
 
@@ -28,8 +29,8 @@ export default function ContactForm() {
         <div className="mt-12 grid gap-8 lg:grid-cols-3">
           <div className="space-y-6 lg:col-span-1">
             {[
-              { icon: Mail, label: "Email", value: "hello@pawmatch.com" },
-              { icon: MapPin, label: "Location", value: "San Francisco, CA" },
+              { icon: Mail, label: "Email", value: APP_CONTACT_EMAIL },
+              { icon: MapPin, label: "Location", value: "India" },
               { icon: Clock, label: "Response Time", value: "Within 48 hours" },
             ].map((item) => (
               <div key={item.label} className="flex gap-3">

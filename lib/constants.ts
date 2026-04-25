@@ -1,7 +1,13 @@
-export const APP_NAME = "PawMatch";
+export const APP_NAME = "PetsPaw";
+export const APP_TAGLINE =
+  "Find trusted dog breed guides, pet care advice, puppies, and pet products in India.";
 export const APP_DESCRIPTION =
-  "Find your perfect dog breed match, get trusted health tips, and discover the best products for your furry friend.";
-export const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  "PetsPaw helps dog parents in India discover the right breeds, trusted pet care advice, puppies for sale, and curated pet products.";
+export const APP_URL = "https://petspaw.in";
+export const APP_OG_IMAGE = `${APP_URL}/og-image.svg`;
+export const APP_CONTACT_EMAIL = "hello@petspaw.in";
+export const APP_SUPPORT_EMAIL = "support@petspaw.in";
+export const APP_PRIVACY_EMAIL = "privacy@petspaw.in";
 export const ADMIN_EMAILS = ["admin@pawmatch.com", "bhanusvist@gmail.com"] as const;
 
 export const NAV_LINKS = [
@@ -27,7 +33,7 @@ export const FOOTER_LINKS = {
   ],
   resources: [
     { label: "Products", href: "/products" },
-    { label: "Sell on PawMatch", href: "/vendor/login" },
+    { label: `Sell on ${APP_NAME}`, href: "/vendor/login" },
     { label: "FAQ", href: "/faq" },
   ],
   company: [

@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { ShoppingBag, TrendingUp, Shield, Users } from "lucide-react";
+import { APP_NAME } from "@/lib/constants";
 
 const FEATURES = [
   { icon: ShoppingBag, label: "List puppies & products" },
@@ -120,7 +121,7 @@ export default function VendorLoginPage() {
       <div className="hidden md:block space-y-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
-            Sell on <span className="text-primary">PawMatch</span>
+            Sell on <span className="text-primary">{APP_NAME}</span>
           </h1>
           <p className="mt-2 text-muted-foreground leading-relaxed">
             Join our marketplace of trusted pet businesses. Manage your store,

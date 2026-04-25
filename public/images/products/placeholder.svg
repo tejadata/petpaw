@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" fill="none">
+  <rect width="1200" height="675" rx="24" fill="#FFF7ED"/>
+  <rect x="54" y="54" width="1092" height="567" rx="20" fill="#FFEDD5"/>
+  <circle cx="600" cy="274" r="120" fill="#FDBA74"/>
+  <path d="M546 262c0-22.091 17.909-40 40-40h28c22.091 0 40 17.909 40 40v88c0 22.091-17.909 40-40 40h-28c-22.091 0-40-17.909-40-40v-88z" fill="white"/>
+  <path d="M507 277c0-15.464 12.536-28 28-28h16c15.464 0 28 12.536 28 28v42c0 15.464-12.536 28-28 28h-16c-15.464 0-28-12.536-28-28v-42z" fill="white"/>
+  <path d="M621 277c0-15.464 12.536-28 28-28h16c15.464 0 28 12.536 28 28v42c0 15.464-12.536 28-28 28h-16c-15.464 0-28-12.536-28-28v-42z" fill="white"/>
+  <text x="600" y="470" text-anchor="middle" fill="#9A3412" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700">
+    PetsPaw Product Guide
+  </text>
+  <text x="600" y="520" text-anchor="middle" fill="#C2410C" font-family="Arial, Helvetica, sans-serif" font-size="28">
+    Curated recommendations for dog parents in India
+  </text>
+</svg>

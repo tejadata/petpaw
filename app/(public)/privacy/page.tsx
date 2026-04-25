@@ -1,9 +1,10 @@
 import { Container } from "@/components/layout/container";
 import { createMetadata } from "@/lib/metadata";
+import { APP_NAME, APP_PRIVACY_EMAIL } from "@/lib/constants";
 
 export const metadata = createMetadata({
   title: "Privacy Policy",
-  description: "Read our privacy policy to understand how PawMatch handles your data.",
+  description: `Read our privacy policy to understand how ${APP_NAME} handles your data.`,
   path: "/privacy",
 });
 
@@ -51,12 +52,12 @@ export default function PrivacyPage() {
         <h2>6. Your Rights</h2>
         <p>
           You can access, update, or delete your account and associated data at any time from your
-          dashboard settings. Contact us at privacy@pawmatch.com for any data requests.
+          dashboard settings. Contact us at {APP_PRIVACY_EMAIL} for any data requests.
         </p>
 
         <h2>7. Children&apos;s Privacy</h2>
         <p>
-          PawMatch is not intended for children under 13. We do not knowingly collect information
+          {APP_NAME} is not intended for children under 13. We do not knowingly collect information
           from children under 13.
         </p>
 
